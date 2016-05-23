@@ -1,0 +1,12 @@
+{% load compress %}
+{% load staticfiles %}
+
+{% compress js %}
+
+<script type="text/javascript" src="{% static 'javascripts/thomas.config.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/thomas.routes.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/authentication/authentication.module.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/authentication/services/authentication.service.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/authentication/controllers/register.controller.js' %}"></script>
+
+{% endcompress %}
