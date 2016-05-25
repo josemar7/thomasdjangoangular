@@ -5,12 +5,13 @@
     .module('thomas', [
       'thomas.config',
       'thomas.routes',
-      'thomas.authentication'
+      'thomas.authentication',
+      'thomas.layout'
     ])
     .run(run);
 
-  angular
-    .module('thomas.routes', ['ngRoute']);
+    angular
+        .module('thomas.config', []);
 
     run.$inject = ['$http'];
 
@@ -23,5 +24,7 @@
       $http.defaults.xsrfCookieName = 'csrftoken';
     }
 
+    angular
+        .module('thomas.routes', ['ngRoute']);
+
 })();
-U
