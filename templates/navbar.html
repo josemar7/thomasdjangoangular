@@ -44,13 +44,18 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
+        <li class="active"><a href="/">Home</a></li>
         <li><a href="#">About</a></li>
         <li><a href="/register">Register</a></li>
         <li><a href="#">Contact</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        {% if user.is_authenticated %}
+          <li><a href="/+{{ user.username }}">+{{ user.username }}</a></li>
+          <li><a href="javascript:void(0)" ng-click="vm.logout()">Logout</a></li>
+        {% else %}
+          <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        {% endif %}
       </ul>
     </div>
   </div>
