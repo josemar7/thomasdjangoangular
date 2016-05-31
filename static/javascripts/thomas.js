@@ -6,7 +6,8 @@
       'thomas.config',
       'thomas.routes',
       'thomas.authentication',
-      'thomas.layout'
+      'thomas.layout',
+      'thomas.translation'
     ])
     .run(run);
 
@@ -26,5 +27,7 @@
 
     angular
         .module('thomas.routes', ['ngRoute']);
+
+    angular.module('thomas.translation', ['gettext']);
 
 })();
