@@ -7,19 +7,19 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Logo</a>
+      <a class="navbar-brand" href="#">&#123;&#123;logo&#125;&#125;</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="/">Home</a></li>
-        <li><a href="/register">Register</a></li>
+        <li class="active"><a href="/">&#123;&#123;home&#125;&#125;</a></li>
+        <li><a href="/register">&#123;&#123;register&#125;&#125;</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         {% if user.is_authenticated %}
           <li><a href="/+{{ user.username }}">+{{ user.username }}</a></li>
-          <li><a href="javascript:void(0)" ng-click="vm.logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+          <li><a href="javascript:void(0)" ng-click="vm.logout()"><span class="glyphicon glyphicon-log-out"></span> &#123;&#123;logout&#125;&#125;</a></li>
         {% else %}
-          <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+          <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> &#123;&#123;login&#125;&#125;</a></li>
         {% endif %}
       </ul>
     </div>

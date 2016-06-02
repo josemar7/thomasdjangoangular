@@ -28,6 +28,4 @@
     angular
         .module('thomas.routes', ['ngRoute']);
 
-    angular.module('thomas.translation', ['gettext']);
-
 })();
