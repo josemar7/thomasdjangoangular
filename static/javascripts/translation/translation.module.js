@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-    var translations = {
+    var translationsEn = {
       HEADLINE: 'What an awesome module!',
       PARAGRAPH: 'Srsly!',
       NAMESPACE: {
@@ -11,7 +11,26 @@
       HOME: 'Home',
       REGISTER: 'Register',
       LOGIN: 'Login',
-      LOGOUT: 'Logout'
+      LOGOUT: 'Logout',
+      VARIABLE_REPLACEMENT: 'Hi, {{name}}',
+      BUTTON_LANG_ES: 'Spanish',
+      BUTTON_LANG_EN: 'English'
+    };
+
+    var translationsEs = {
+      HEADLINE: 'Qué módulo más maravilloso!',
+      PARAGRAPH: 'Yeeeeeeeepa!',
+      NAMESPACE: {
+        PARAGRAPH: 'Viene con características maravillosas!'
+      },
+      LOGO: 'Logotipo',
+      HOME: 'Casa',
+      REGISTER: 'Registrarse',
+      LOGIN: 'Conexión',
+      LOGOUT: 'Desconexión',
+      VARIABLE_REPLACEMENT: 'Hola, {{name}}',
+      BUTTON_LANG_ES: 'Español',
+      BUTTON_LANG_EN: 'Inglés'
     };
 
   angular
@@ -23,38 +42,19 @@
   angular
     .module('thomas.translation.controllers', [])
         .config(['$translateProvider', function ($translateProvider) {
+        /*
           // add translation table
           $translateProvider
             .translations('en', translations)
             .preferredLanguage('en');
-        }])
-        .controller('Ctrl', ['$scope', '$translate', function ($scope, $translate) {
-          // expose translation via `$translate` service
-          $translate('HEADLINE').then(function (headline) {
-            $scope.headline = headline;
-          });
-          $translate('PARAGRAPH').then(function (paragraph) {
-            $scope.paragraph = paragraph;
-          });
-          $translate('NAMESPACE.PARAGRAPH').then(function (anotherOne) {
-            $scope.namespaced_paragraph = anotherOne;
-          });
-          $translate('LOGO').then(function (logo) {
-            $scope.logo = logo;
-          });
-          $translate('HOME').then(function (home) {
-            $scope.home = home;
-          });
-          $translate('REGISTER').then(function (register) {
-            $scope.register = register;
-          });
-          $translate('LOGIN').then(function (login) {
-            $scope.login = login;
-          });
-          $translate('LOGOUT').then(function (logout) {
-            $scope.logout = logout;
-          });
-        }]);
+            */
 
+          // add translation tables
+          $translateProvider.translations('en', translationsEn);
+          $translateProvider.translations('es', translationsEs);
+          $translateProvider.preferredLanguage('es');
+          $translateProvider.fallbackLanguage('es');
+
+        }]);
 
 })();
