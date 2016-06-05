@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'compressor',
     'authentication',
+    'words',
 ]
 
 MIDDLEWARE_CLASSES = [

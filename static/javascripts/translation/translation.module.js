@@ -14,7 +14,11 @@
       LOGOUT: 'Logout',
       VARIABLE_REPLACEMENT: 'Hi, {{name}}',
       BUTTON_LANG_ES: 'Spanish',
-      BUTTON_LANG_EN: 'English'
+      BUTTON_LANG_EN: 'English',
+      EMAIL: 'Email',
+      PASSWORD: 'Password',
+      ACCEPT: 'Accept',
+      USERNAME: 'Username'
     };
 
     var translationsEs = {
@@ -30,7 +34,11 @@
       LOGOUT: 'Desconexión',
       VARIABLE_REPLACEMENT: 'Hola, {{name}}',
       BUTTON_LANG_ES: 'Español',
-      BUTTON_LANG_EN: 'Inglés'
+      BUTTON_LANG_EN: 'Inglés',
+      EMAIL: 'Email',
+      PASSWORD: 'Contraseña',
+      ACCEPT: 'Aceptar',
+      USERNAME: 'Usuario'
     };
 
   angular
