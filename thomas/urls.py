@@ -4,14 +4,16 @@ from rest_framework_nested import routers
 
 from authentication.views import AccountViewSet, LoginView, LogoutView
 from thomas.views import IndexView
+from words.views import WordViewSet, AccountWordsViewSet
 
 router = routers.SimpleRouter()
 router.register(r'accounts', AccountViewSet)
+router.register(r'words', WordViewSet)
 
 accounts_router = routers.NestedSimpleRouter(
     router, r'accounts', lookup='account'
 )
-
+accounts_router.register(r'posts', AccountWordsViewSet)
 
 urlpatterns = patterns(
      '',
@@ -22,3 +24,4 @@ urlpatterns = patterns(
     url('^.*$', IndexView.as_view(), name='index'),
 
 )
+

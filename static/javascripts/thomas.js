@@ -7,7 +7,8 @@
       'thomas.routes',
       'thomas.authentication',
       'thomas.layout',
-      'thomas.translation'
+      'thomas.translation',
+      'thomas.words'
     ])
     .run(run);
 

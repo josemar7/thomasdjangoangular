@@ -9,15 +9,37 @@
     .module('thomas.words.controllers')
     .controller('WordsController', WordsController);
 
-  WordsController.$inject = ['$scope'];
+  WordsController.$inject = ['$scope', 'Words'];
 
   /**
   * @namespace WordsController
   */
-  function WordsController($scope) {
+  function WordsController($scope, Words) {
     var vm = this;
+    vm.words = [];
 
     vm.columns = [];
+
+    vm.words = Words.all().then(wordsSuccessFn, wordsErrorFn);
+
+  /**
+  * @name wordsSuccessFn
+  * @desc Update posts array on view
+  */
+  function wordsSuccessFn(data, status, headers, config) {
+    vm.words = data.data;
+  }
+
+
+  /**
+  * @name wordsErrorFn
+  * @desc Show snackbar with error
+  */
+  function wordsErrorFn(data, status, headers, config) {
+    //Snackbar.error(data.error);
+  }
+
+
 
     activate();
 
@@ -96,8 +118,8 @@
     /**
     * @name render
     * @desc Renders Posts into columns of approximately equal height
-    * @param {Array} current The current value of `vm.posts`
-    * @param {Array} original The value of `vm.posts` before it was updated
+    * @param {Array} current The current value of `vm.words`
+    * @param {Array} original The value of `vm.words` before it was updated
     * @memberOf thomas.words.controllers.WordsController
     */
     function render(current, original) {

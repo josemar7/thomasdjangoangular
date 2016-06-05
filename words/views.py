@@ -1,8 +1,7 @@
 from django.shortcuts import render
-from rest_framework import viewsets
+from rest_framework import viewsets, permissions
 from rest_framework.response import Response
 
-from authentication import permissions
 from words.models import Word
 from words.permissions import IsAuthorOfWord
 from words.serializers import WordSerializer
@@ -24,7 +23,7 @@ class WordViewSet(viewsets.ModelViewSet):
 
 
 
-class AccountPostsViewSet(viewsets.ViewSet):
+class AccountWordsViewSet(viewsets.ViewSet):
     queryset = Word.objects.select_related('author').all()
     serializer_class = WordSerializer
 

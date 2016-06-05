@@ -7,9 +7,9 @@
 
   angular
     .module('thomas.words.services')
-    .factory('Posts', Posts);
+    .factory('Words', Words);
 
-  Posts.$inject = ['$http'];
+  Words.$inject = ['$http'];
 
   /**
   * @namespace Words
@@ -30,7 +30,7 @@
 
     /**
     * @name all
-    * @desc Get all Posts
+    * @desc Get all Words
     * @returns {Promise}
     * @memberOf thomas.words.services.Words
     */

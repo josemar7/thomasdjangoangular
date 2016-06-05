@@ -18,7 +18,8 @@
       EMAIL: 'Email',
       PASSWORD: 'Password',
       ACCEPT: 'Accept',
-      USERNAME: 'Username'
+      USERNAME: 'Username',
+      WORDS: 'Words'
     };
 
     var translationsEs = {
@@ -38,7 +39,8 @@
       EMAIL: 'Email',
       PASSWORD: 'Contraseña',
       ACCEPT: 'Aceptar',
-      USERNAME: 'Usuario'
+      USERNAME: 'Usuario',
+      WORDS: 'Palabras'
     };
 
   angular

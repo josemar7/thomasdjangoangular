@@ -20,6 +20,10 @@
       controller: 'LoginController',
       controllerAs: 'vm',
       templateUrl: '/static/templates/authentication/login.html'
+    }).when('/words', {
+      controller: 'WordsController',
+      controllerAs: 'vm',
+      templateUrl: '/static/templates/words/words.html'
     }).otherwise('/');
   }
 })();
