@@ -1,0 +1,6 @@
+<words words="vm.words" ng-show="vm.words && vm.words.length"></words>
+<a class="btn btn-primary btn-fab btn-raised mdi-content-add btn-add-new-word"
+  href="javascript:void(0)"
+  ng-show="vm.isAuthenticated"
+  ng-dialog="/static/templates/words/new-word.html"
+  ng-dialog-controller="NewWordController as vm"></a>

@@ -21,7 +21,7 @@
     var directive = {
       restrict: 'E',
       scope: {
-        post: '='
+        word: '='
       },
       templateUrl: '/static/templates/words/word.html'
     };

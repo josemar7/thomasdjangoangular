@@ -4,11 +4,13 @@
   angular
     .module('thomas', [
       'thomas.config',
-      'thomas.routes',
+      'thomas.router',
       'thomas.authentication',
       'thomas.layout',
       'thomas.translation',
-      'thomas.words'
+      'thomas.words',
+      'thomas.wordsGrid',
+      'thomas.utils'
     ])
     .run(run);
 
@@ -26,7 +28,8 @@
       $http.defaults.xsrfCookieName = 'csrftoken';
     }
 
-    angular
-        .module('thomas.routes', ['ngRoute']);
+  angular
+    .module('thomas.utils', []);
+
 
 })();

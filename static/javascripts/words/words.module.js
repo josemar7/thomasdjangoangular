@@ -16,4 +16,6 @@
 
   angular
     .module('thomas.words.services', []);
+
+
 })();

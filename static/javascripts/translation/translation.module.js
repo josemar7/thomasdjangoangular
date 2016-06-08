@@ -18,6 +18,9 @@
       EMAIL: 'Email',
       PASSWORD: 'Password',
       ACCEPT: 'Accept',
+      NAME: 'Name',
+      SNACK: 'This is my awesome snackbar!',
+      TRANSLATION: 'Translation',
       USERNAME: 'Username',
       WORDS: 'Words'
     };
@@ -39,8 +42,12 @@
       EMAIL: 'Email',
       PASSWORD: 'Contraseña',
       ACCEPT: 'Aceptar',
+      NAME: 'Nombre',
+      SNACK: 'Este es el maravilloso snackbar!',
+      TRANSLATION: 'Traducción',
       USERNAME: 'Usuario',
       WORDS: 'Palabras'
+
     };
 
   angular
