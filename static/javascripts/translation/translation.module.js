@@ -18,11 +18,19 @@
       EMAIL: 'Email',
       PASSWORD: 'Password',
       ACCEPT: 'Accept',
+      COMMENT: 'Comment',
+      FAVORITE: 'Favorite',
       NAME: 'Name',
+      NEW: 'New',
+      NEW_WORD: 'New Word',
+      NO: 'No',
       SNACK: 'This is my awesome snackbar!',
       TRANSLATION: 'Translation',
+      TYPE: 'Type',
       USERNAME: 'Username',
-      WORDS: 'Words'
+      VOCABULARY: 'Vocabulary',
+      WORDS: 'Words',
+      YES: 'Yes'
     };
 
     var translationsEs = {
@@ -42,11 +50,19 @@
       EMAIL: 'Email',
       PASSWORD: 'Contraseña',
       ACCEPT: 'Aceptar',
+      COMMENT: 'Comentario',
+      FAVORITE: 'Favorita',
       NAME: 'Nombre',
+      NEW: 'Nuevo',
+      NEW_WORD: 'Nueva Palabra',
+      NO: 'No',
       SNACK: 'Este es el maravilloso snackbar!',
       TRANSLATION: 'Traducción',
+      TYPE: 'Tipo',
       USERNAME: 'Usuario',
-      WORDS: 'Palabras'
+      VOCABULARY: 'Vocabulario',
+      WORDS: 'Palabras',
+      YES: 'Si'
 
     };
 

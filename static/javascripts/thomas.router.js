@@ -48,6 +48,17 @@
                     return Words.all();
                 }
             }
+        })
+        .state('newWord', {
+            url: "/newWord",
+            controller: 'NewWordController',
+            controllerAs: 'vm',
+            templateUrl: '/static/templates/words/newWord.html',
+            resolve: {
+                wordsType: function(Words) {
+                    return Words.allWordType();
+                }
+            }
         });
 
   }

@@ -2,9 +2,9 @@ from django.shortcuts import render
 from rest_framework import viewsets, permissions
 from rest_framework.response import Response
 
-from words.models import Word
+from words.models import Word, WordType
 from words.permissions import IsAuthorOfWord
-from words.serializers import WordSerializer
+from words.serializers import WordSerializer, WordTypeSerializer
 
 
 class WordViewSet(viewsets.ModelViewSet):
@@ -21,6 +21,19 @@ class WordViewSet(viewsets.ModelViewSet):
 
         return super(WordViewSet, self).perform_create(serializer)
 
+class WordTypeViewSet(viewsets.ModelViewSet):
+    queryset = WordType.objects.order_by('-created_at')
+    serializer_class = WordTypeSerializer
+
+    def get_permissions(self):
+        if self.request.method in permissions.SAFE_METHODS:
+            return (permissions.AllowAny(),)
+        return (permissions.IsAuthenticated(), )
+
+    def perform_create(self, serializer):
+        instance = serializer.save()
+
+        return super(WordTypeViewSet, self).perform_create(serializer)
 
 
 class AccountWordsViewSet(viewsets.ViewSet):

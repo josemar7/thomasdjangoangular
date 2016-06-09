@@ -29,3 +29,11 @@
     }
     .row.content {height:auto;}
   }
+
+.gridxxx {
+  width: 1000px;
+  height: 300px;
+  position: absolute;
+  left: 10%;
+  top: 25px;
+}

@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col-md-4 col-md-offset-4">
+    <h3 translate="NEW_WORD"></h3>
+
+    <div class="well">
+      <form role="form" ng-submit="vm.submit()">
+        <div class="form-group">
+          <label for="word__name" translate="NAME"></label>
+          <input type="text" class="form-control" id="word__name" ng-model="vm.name"  />
+        </div>
+
+        <div class="form-group">
+          <label for="word__translation" translate="TRANSLATION"></label>
+          <input type="text" class="form-control" id="word__translation" ng-model="vm.translation"  />
+        </div>
+
+        <div class="form-group">
+          <label for="word__comment" translate="COMMENT"></label>
+          <textarea class="form-control" rows="3" id="word__comment" ng-model="vm.comment"></textarea>
+        </div>
+
+        <div class="form-group" >
+          <label translate="FAVORITE"></label>
+          <label class="btn btn-default">
+            <input name="favoriteYes" id="favoriteYes" value="y" type="radio" data-ng-model="favorite">&#123;&#123;'YES' | translate&#125;&#125;
+          </label>
+          <label class="btn btn-default">
+            <input name="favoriteNo" id="favoriteNo" value="n" class="active" type="radio" data-ng-model="favorite">&#123;&#123;'NO' | translate&#125;&#125;
+          </label>
+        </div>
+
+        <div class="form-group" >
+            <label translate="TYPE"></label>
+            <label for="word__type" translate="TYPE"></label>
+            <select class="form-control" id="word__type">
+                <option ng-repeat="wordType in vm.wordsType" value="{{wordType.id}}">{{ wordType.description }}</option>
+            </select>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

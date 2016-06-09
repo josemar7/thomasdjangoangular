@@ -21,12 +21,17 @@
       create: create,
       get: get,
       update: update,
-      destroy: destroy
+      destroy: destroy,
+      allWordType: allWordType
     };
 
     return Words;
 
     ////////////////////
+
+    function allWordType() {
+      return $http.get('/api/v1/wordsType/');
+    }
 
     /**
     * @name all
