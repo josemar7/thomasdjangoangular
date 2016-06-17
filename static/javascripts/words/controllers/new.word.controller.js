@@ -9,12 +9,14 @@
     .module('thomas.words.controllers')
     .controller('NewWordController', NewWordController);
 
-  NewWordController.$inject = ['$rootScope', '$scope', 'Authentication', 'Utils', 'Words', 'wordsType'];
+  NewWordController.$inject = ['$rootScope', '$scope', 'Authentication', 'Utils', 'Words', 'wordsType', '$location'];
 
   /**
   * @namespace NewWordController
   */
-  function NewWordController($rootScope, $scope, Authentication, Utils, Words, wordsType) {
+  function NewWordController($rootScope, $scope, Authentication, Utils, Words, wordsType, $location) {
+
+    $scope.word = {};
 
     var vm = this;
     var parent = $scope.$parent;
@@ -27,28 +29,18 @@
     * @desc Create a new Word
     * @memberOf thomas.words.controllers.NewWordController
     */
-    function submit() {
+    function submit(word) {
 
-      $scope.closeThisDialog();
 
-      Words.create(vm.content).then(createWordSuccessFn, createWordErrorFn);
+      Words.create(word).then(createWordSuccessFn, createWordErrorFn);
 
       /**
       * @name createWordSuccessFn
       * @desc Show snackbar with success message
       */
       function createWordSuccessFn(data, status, headers, config) {
-        Snackbar.show('Success! Post created.');
-
-          Words.all().then(wordsSuccessFn, wordsErrorFn);
-
-          function wordsSuccessFn(data, status, headers, config) {
-            parent.gridOptions.data = data.data;
-          }
-
-          function wordsErrorFn(data, status, headers, config) {
-            //Utils.getMessageWithSnack('SNACK');
-          }
+        //Snackbar.show('Success! Post created.');
+          $location.path('words1');
       }
 
 

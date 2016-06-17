@@ -7,6 +7,7 @@ from thomas.views import IndexView
 from words.views import WordViewSet, AccountWordsViewSet, WordTypeViewSet
 
 router = routers.SimpleRouter()
+
 router.register(r'accounts', AccountViewSet)
 router.register(r'words', WordViewSet)
 router.register(r'wordsType', WordTypeViewSet)
@@ -14,7 +15,7 @@ router.register(r'wordsType', WordTypeViewSet)
 accounts_router = routers.NestedSimpleRouter(
     router, r'accounts', lookup='account'
 )
-accounts_router.register(r'posts', AccountWordsViewSet)
+accounts_router.register(r'words', AccountWordsViewSet)
 
 urlpatterns = patterns(
      '',

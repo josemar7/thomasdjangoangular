@@ -51,9 +51,13 @@
     * @returns {Promise}
     * @memberOf thomas.words.services.Words
     */
-    function create(content) {
+    function create(word) {
       return $http.post('/api/v1/words/', {
-        content: content
+        name: word.name,
+        translation: word.translation,
+        comment: word.comment,
+        favorite: word.favorite,
+        wordType: word.wordType.id
       });
     }
 
