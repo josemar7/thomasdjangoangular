@@ -30,6 +30,36 @@
     */
     function submit(word) {
 
+      //$(wordform).data('formValidation').validate();
+      var isValidForm = $(wordform).data('formValidation').isValid();
+      console.log(isValidForm);
+      if (isValidForm)
+        $(wordform).formValidation('destroy');
+
+      //Words.create(word).then(createWordSuccessFn, createWordErrorFn);
+
+      /**
+      * @name createWordSuccessFn
+      * @desc Show snackbar with success message
+      */
+      function createWordSuccessFn(data, status, headers, config) {
+        //Snackbar.show('Success! Post created.');
+          $location.path('words1');
+      }
+
+
+      /**
+      * @name createWordErrorFn
+      * @desc Propogate error event and show snackbar with error message
+      */
+      function createWordErrorFn(data, status, headers, config) {
+        $rootScope.$broadcast('word.created.error');
+        Snackbar.error(data.error);
+      }
+    }
+
+    $scope.$on('$viewContentLoaded', function(){
+
         $(wordform).formValidation({
             framework: 'bootstrap',
             icon: {
@@ -55,36 +85,6 @@
 
             }
         });
-
-        $(wordform).data('formValidation').validate();
-
-      //$(wordform).data('formValidation').validate();
-      var isValidForm = $(wordform).data('formValidation').isValid();
-      console.log(isValidForm);
-
-      //Words.create(word).then(createWordSuccessFn, createWordErrorFn);
-
-      /**
-      * @name createWordSuccessFn
-      * @desc Show snackbar with success message
-      */
-      function createWordSuccessFn(data, status, headers, config) {
-        //Snackbar.show('Success! Post created.');
-          $location.path('words1');
-      }
-
-
-      /**
-      * @name createWordErrorFn
-      * @desc Propogate error event and show snackbar with error message
-      */
-      function createWordErrorFn(data, status, headers, config) {
-        $rootScope.$broadcast('word.created.error');
-        Snackbar.error(data.error);
-      }
-    }
-
-    $scope.$on('$viewContentLoaded', function(){
 
       $scope.word = {
         favorite: 'true',
