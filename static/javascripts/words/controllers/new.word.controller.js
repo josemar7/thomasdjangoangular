@@ -22,7 +22,6 @@
     var parent = $scope.$parent;
 
     vm.submit = submit;
-    vm.wordsType = wordsType.data;
 
     /**
     * @name submit
@@ -31,8 +30,39 @@
     */
     function submit(word) {
 
+        $(wordform).formValidation({
+            framework: 'bootstrap',
+            icon: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                name: {
+                    validators: {
+                        notEmpty: {
+                            message: Utils.getMessage('REQUIRED_FIELD', { field: Utils.getMessage('NAME') })
+                        }
+                    }
+                },
+                translation: {
+                    validators: {
+                        notEmpty: {
+                            message: Utils.getMessage('REQUIRED_FIELD', { field: Utils.getMessage('TRANSLATION') })
+                        }
+                    }
+                }
 
-      Words.create(word).then(createWordSuccessFn, createWordErrorFn);
+            }
+        });
+
+        $(wordform).data('formValidation').validate();
+
+      //$(wordform).data('formValidation').validate();
+      var isValidForm = $(wordform).data('formValidation').isValid();
+      console.log(isValidForm);
+
+      //Words.create(word).then(createWordSuccessFn, createWordErrorFn);
 
       /**
       * @name createWordSuccessFn
@@ -53,5 +83,20 @@
         Snackbar.error(data.error);
       }
     }
+
+    $scope.$on('$viewContentLoaded', function(){
+
+      $scope.word = {
+        favorite: 'true',
+        availableOptions: wordsType.data,
+        wordType: {id: wordsType.data[1].id, description: wordsType.data[1].description} //This sets the default value of the select in the ui
+      };
+
+
+    });
+
+
   }
+
+
 })();

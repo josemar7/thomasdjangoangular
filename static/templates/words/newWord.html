@@ -4,104 +4,58 @@
 
     <div class="well well">
 
-<form id="wordform" role="form" class="form-horizontal" novalidate>
+<form name="wordform" id="wordform" role="form" ng-submit="vm.submit(word)" class="form-horizontal" >
 
     <div class="form-group">
-      <label class="col-xs-2" for="word[name]" translate="NAME"></label>
+      <label class="col-xs-2" for="name" translate="NAME"></label>
       <div class="col-xs-10">
-        <input type="text" class="form-control" id="word[name]" name="word[name]" ng-model="word.name" required />
-    <br />
-    <div ng-show="wordform.$submitted || wordform.word[name].$touched">
-      <div ng-show="wordform.word[name].$error.required">Tell us your name.</div>
-    </div>
-
-      </div>
-
-
-
-    Name:
-    <input type="text" ng-model="user.name" name="uName" required="" />
-    <br />
-    <div ng-show="form.$submitted || form.uName.$touched">
-      <div ng-show="form.uName.$error.required">Tell us your name.</div>
-    </div>
-
-
-
-    </div>
-
-    <div class="form-group">
-      <label class="col-xs-2" for="word[translation]" translate="TRANSLATION"></label>
-      <div class="col-xs-10">
-        <input type="text" class="form-control" id="word[translation]" name="word[translation]" ng-model="word.translation"  />
+        <input type="text" class="form-control" id="name" name="name" ng-model="word.name" />
       </div>
     </div>
 
     <div class="form-group">
-      <label class="col-xs-2" for="word[comment]" translate="COMMENT"></label>
+      <label class="col-xs-2" for="translation" translate="TRANSLATION"></label>
       <div class="col-xs-10">
-        <textarea class="form-control" rows="3" id="word[comment]" name="word[comment]" ng-model="word.comment"></textarea>
+        <input type="text" class="form-control" id="translation" name="translation" ng-model="word.translation"  />
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <label class="col-xs-2" for="comment" translate="COMMENT"></label>
+      <div class="col-xs-10">
+        <textarea class="form-control" rows="3" id="comment" name="comment" ng-model="word.comment"></textarea>
       </div>
     </div>
 
     <div class="form-group">
       <label class="col-xs-2" translate="FAVORITE"></label>
-      <div class="col-xs-10">
+      <div class="col-xs-10" >
           <div>
-            <label><input name="favoriteYes" id="favoriteYes" name="word[favorite]" value="true" type="radio" data-ng-model="word.favorite">&#123;&#123;'YES' | translate&#125;&#125;</label>
+            <label><input name="favoriteYes" id="favoriteYes" name="favorite" value="true" type="radio" data-ng-model="word.favorite" ng-checked="true" >&#123;&#123;'YES' | translate&#125;&#125;</label>
           </div>
           <div>
-            <label><input name="favoriteNo" id="favoriteNo" name="word[favorite]" value="false" class="active" type="radio" data-ng-model="word.favorite">&#123;&#123;'NO' | translate&#125;&#125;</label>
+            <label><input name="favoriteNo" id="favoriteNo" name="favorite" value="false" class="active" type="radio" data-ng-model="word.favorite">&#123;&#123;'NO' | translate&#125;&#125;</label>
           </div>
       </div>
     </div>
 
     <div class="form-group" >
-        <label for="word[type]" class="col-xs-2" translate="TYPE"></label>
+        <label for="type" class="col-xs-2" translate="TYPE"></label>
         <div class="col-xs-10 ">
-          <select class="form-control" ng-model="word.wordType.id" id="word[type]" name="word[type]" >
-              <option ng-repeat="wordType in vm.wordsType" value="{{wordType.id}}">{{ wordType.description }}</option>
-          </select>
+            <select class="form-control" name="type" id="type"
+              ng-options="option.description for option in word.availableOptions track by option.id"
+              ng-model="word.wordType">
+            </select>
         </div>
     </div>
 
     <div class="form-group">
         <div class="col-xs-9 col-xs-offset-3">
-            <button type="submit" ng-click="vm.submit(word)" class="btn btn-primary" translate="SAVE"></button>
+            <button type="submit" class="btn btn-primary" translate="SAVE" ></button>
         </div>
     </div>
 
-<!--
-    <div class="form-group">
-        <label class="col-xs-3 control-label">Full name</label>
-        <div class="col-xs-4">
-            <input type="text" class="form-control" name="user[firstName]" placeholder="First name" />
-        </div>
-        <div class="col-xs-4">
-            <input type="text" class="form-control" name="user[lastName]" placeholder="Last name" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-xs-3 control-label">Username</label>
-        <div class="col-xs-5">
-            <input type="text" class="form-control" name="user[username]" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label class="col-xs-3 control-label">Email address</label>
-        <div class="col-xs-5">
-            <input type="text" class="form-control" name="user[email]" />
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-xs-9 col-xs-offset-3">
-            <button type="submit" class="btn btn-default">Add</button>
-        </div>
-    </div>
--->
 
 </form>
 </div>

@@ -21,12 +21,12 @@
     * @desc The Factory to be returned
     */
     var Authentication = {
-      getAuthenticatedAccount: getAuthenticatedAccount,
+      //getAuthenticatedAccount: getAuthenticatedAccount,
       isAuthenticated: isAuthenticated,
       login: login,
       logout: logout,
       register: register,
-      setAuthenticatedAccount: setAuthenticatedAccount,
+      //setAuthenticatedAccount: setAuthenticatedAccount,
       unauthenticate: unauthenticate
     };
 
@@ -74,6 +74,7 @@
        * @returns {object|undefined} Account if authenticated, else `undefined`
        * @memberOf thinkster.authentication.services.Authentication
        */
+       /*
       function getAuthenticatedAccount() {
         if (!$cookies.authenticatedAccount) {
           return;
@@ -81,6 +82,7 @@
 
         return JSON.parse($cookies.authenticatedAccount);
       }
+      */
 
       /**
        * @name isAuthenticated
@@ -110,9 +112,9 @@
            * @desc Set the authenticated account and redirect to index
            */
           function loginSuccessFn(data, status, headers, config) {
-            Authentication.setAuthenticatedAccount(data.data);
+            //Authentication.setAuthenticatedAccount(data.data);
 
-            //window.location = '/';
+            window.location = '/';
           }
 
           /**
@@ -160,9 +162,11 @@
        * @returns {undefined}
        * @memberOf thinkster.authentication.services.Authentication
        */
+       /*
       function setAuthenticatedAccount(account) {
         $cookies.authenticatedAccount = JSON.stringify(account);
       }
+      */
 
       /**
        * @name unauthenticate

@@ -25,8 +25,11 @@
 
     ////////////////////
 
-      function getMessage(name) {
-        return $translate.instant(name);
+      function getMessage(name, parameters) {
+        if (parameters == undefined)
+            return $translate.instant(name);
+        else
+            return $translate.instant(name, parameters);
       }
 
       function getMessageWithSnack(name) {
