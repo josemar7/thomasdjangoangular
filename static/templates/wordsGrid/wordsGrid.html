@@ -7,7 +7,18 @@
 
         <div ui-grid="gridOptions" ui-grid-pagination class="grid"></div>
 
+        <!--
         <button type="button" class="btn btn-primary" translate="NEW" ui-sref="newWord"></button>
+        -->
+
+        <button class="btn btn-primary" ng-controller="NewWordController as vm" ng-click="clickToOpen()" translate="NEW"></button>
+        <!--
+        <a class="btn btn-primary"
+          href="javascript:void(0)"
+          ng-dialog="/static/templates/words/newWord.html"
+          ng-dialog-controller="NewWordController as vm">&#123;&#123;'NEW' | translate&#125;&#125;</a>
+          -->
+
 
     </div>
   </div>

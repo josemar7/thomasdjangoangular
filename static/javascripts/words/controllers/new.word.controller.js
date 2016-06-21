@@ -9,12 +9,12 @@
     .module('thomas.words.controllers')
     .controller('NewWordController', NewWordController);
 
-  NewWordController.$inject = ['$rootScope', '$scope', 'Authentication', 'Utils', 'Words', 'wordsType', '$location'];
+  NewWordController.$inject = ['$rootScope', '$scope', 'Authentication', 'Utils', 'Words', '$location', 'ngDialog'];
 
   /**
   * @namespace NewWordController
   */
-  function NewWordController($rootScope, $scope, Authentication, Utils, Words, wordsType, $location) {
+  function NewWordController($rootScope, $scope, Authentication, Utils, Words, $location, ngDialog) {
 
     $scope.word = {};
 
@@ -58,7 +58,8 @@
       }
     }
 
-    $scope.$on('$viewContentLoaded', function(){
+    //$scope.$on('$viewContentLoaded', function(){
+    $scope.$on('ngDialog.templateLoaded', function (e, template) {
 
         $(wordform).formValidation({
             framework: 'bootstrap',
@@ -86,12 +87,67 @@
             }
         });
 
+      wordsType = Words.allWordType();
+
       $scope.word = {
         favorite: 'true',
         availableOptions: wordsType.data,
         wordType: {id: wordsType.data[1].id, description: wordsType.data[1].description} //This sets the default value of the select in the ui
       };
 
+    });
+
+    $scope.clickToOpen = function () {
+        ngDialog.open({
+            template: '/static/templates/words/newWord.html',
+            width: 800,
+            controller: 'NewWordController as vm',
+            scope: $scope
+        });
+    };
+
+    $scope.$on('ngDialog.opened', function (e, $dialog) {
+
+      Words.allWordType()
+        .then(
+          function(result) {
+              $scope.word = {
+                favorite: 'true',
+                availableOptions: result,
+                wordType: {id: result[1].id, description: result[1].description} //This sets the default value of the select in the ui
+              };
+          },
+          function(error) {
+            // handle errors here
+            console.log(error.statusText);
+          }
+        );
+
+        $(wordform).formValidation({
+            framework: 'bootstrap',
+            icon: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                name: {
+                    validators: {
+                        notEmpty: {
+                            message: Utils.getMessage('REQUIRED_FIELD', { field: Utils.getMessage('NAME') })
+                        }
+                    }
+                },
+                translation: {
+                    validators: {
+                        notEmpty: {
+                            message: Utils.getMessage('REQUIRED_FIELD', { field: Utils.getMessage('TRANSLATION') })
+                        }
+                    }
+                }
+
+            }
+        });
 
     });
 

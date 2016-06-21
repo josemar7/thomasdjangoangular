@@ -9,13 +9,16 @@
     .module('thomas.words.services')
     .factory('Words', Words);
 
-  Words.$inject = ['$http'];
+  Words.$inject = ['$http', '$q'];
 
   /**
   * @namespace Words
   * @returns {Factory}
   */
-  function Words($http) {
+  function Words($http, $q) {
+
+    var deferred = $q.defer();
+
     var Words = {
       all: all,
       create: create,
@@ -30,7 +33,19 @@
     ////////////////////
 
     function allWordType() {
-      return $http.get('/api/v1/wordsType/');
+
+        return $http.get('/api/v1/wordsType/')
+          .then(function(response) {
+            // promise is fulfilled
+            deferred.resolve(response.data);
+            return deferred.promise;
+          }, function(response) {
+            // the following line rejects the promise
+            deferred.reject(response);
+            return deferred.promise;
+          });
+
+      //return $http.get('/api/v1/wordsType/');
     }
 
     /**
