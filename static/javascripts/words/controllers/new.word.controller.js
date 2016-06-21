@@ -58,44 +58,6 @@
       }
     }
 
-    //$scope.$on('$viewContentLoaded', function(){
-    $scope.$on('ngDialog.templateLoaded', function (e, template) {
-
-        $(wordform).formValidation({
-            framework: 'bootstrap',
-            icon: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                name: {
-                    validators: {
-                        notEmpty: {
-                            message: Utils.getMessage('REQUIRED_FIELD', { field: Utils.getMessage('NAME') })
-                        }
-                    }
-                },
-                translation: {
-                    validators: {
-                        notEmpty: {
-                            message: Utils.getMessage('REQUIRED_FIELD', { field: Utils.getMessage('TRANSLATION') })
-                        }
-                    }
-                }
-
-            }
-        });
-
-      wordsType = Words.allWordType();
-
-      $scope.word = {
-        favorite: 'true',
-        availableOptions: wordsType.data,
-        wordType: {id: wordsType.data[1].id, description: wordsType.data[1].description} //This sets the default value of the select in the ui
-      };
-
-    });
 
     $scope.clickToOpen = function () {
         ngDialog.open({
