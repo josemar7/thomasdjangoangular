@@ -7,6 +7,10 @@
 
         <div ui-grid="gridOptions" ui-grid-pagination class="grid"></div>
 
+          <p translate="PAGINATION_MESSAGE" translate-values="{ current: gridApi.pagination.getPage(), total: gridApi.pagination.getTotalPages()}"></p>
+          <button type="button" class="btn btn-success" ng-click="gridApi.pagination.previousPage()" translate="PREVIOUS_PAGE"></button>
+          <button type="button" class="btn btn-success" ng-click="gridApi.pagination.nextPage()" translate="NEXT_PAGE"></button>
+
         <!--
         <button type="button" class="btn btn-primary" translate="NEW" ui-sref="newWord"></button>
         -->
