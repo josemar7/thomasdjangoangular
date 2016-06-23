@@ -5,23 +5,20 @@
 
     <div class="well">
 
-        <div ui-grid="gridOptions" ui-grid-pagination class="grid"></div>
+          <div>
+            <label><h4 translate="HIDDEN_COLUMN"></h4></label><span class="glyphicon glyphicon-star"></span>
+            <label><input type="radio" ng-model="vm.hiddenColumn" value="name" ng-change="vm.refresh()">&#123;&#123;'NAME' | translate&#125;&#125;</label>
+            <label><input type="radio" ng-model="vm.hiddenColumn" value="translation" ng-change="vm.refresh()">&#123;&#123;'TRANSLATION' | translate&#125;&#125;</label>
+          </div>
 
-          <p translate="PAGINATION_MESSAGE" translate-values="{ current: gridApi.pagination.getPage(), total: gridApi.pagination.getTotalPages()}"></p>
-          <button type="button" class="btn btn-success" ng-click="gridApi.pagination.previousPage()" translate="PREVIOUS_PAGE"></button>
-          <button type="button" class="btn btn-success" ng-click="gridApi.pagination.nextPage()" translate="NEXT_PAGE"></button>
+        <div ui-grid="vm.gridOptions" ui-grid-pagination class="grid"></div>
 
-        <!--
-        <button type="button" class="btn btn-primary" translate="NEW" ui-sref="newWord"></button>
-        -->
+          <p translate="PAGINATION_MESSAGE" translate-values="{ current: vm.gridApi.pagination.getPage(), total: vm.gridApi.pagination.getTotalPages()}"></p>
+          <button type="button" class="btn btn-success" ng-click="vm.gridApi.pagination.previousPage()" translate="PREVIOUS_PAGE"></button>
+          <button type="button" class="btn btn-success" ng-click="vm.gridApi.pagination.nextPage()" translate="NEXT_PAGE"></button>
+
 
         <button class="btn btn-primary" ng-controller="NewWordController as vm" ng-click="clickToOpen()" translate="NEW"></button>
-        <!--
-        <a class="btn btn-primary"
-          href="javascript:void(0)"
-          ng-dialog="/static/templates/words/newWord.html"
-          ng-dialog-controller="NewWordController as vm">&#123;&#123;'NEW' | translate&#125;&#125;</a>
-          -->
 
 
     </div>

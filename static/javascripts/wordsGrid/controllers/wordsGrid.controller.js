@@ -23,21 +23,47 @@ WordsGridController.$inject = ['$scope', '$http', 'ngDialog', 'words', 'Utils'];
   */
   function WordsGridController($scope, $http, ngDialog, words, Utils) {
 
-      $scope.gridOptions = {
+      var vm = this;
+
+      vm.hiddenColumn = 'name';
+
+      vm.gridOptions = {
+        enableFiltering: false,
         //paginationPageSizes: [25, 50, 75],
         enablePaginationControls: false,
         paginationPageSize: 25,
+        onRegisterApi: function(gridApi){
+          vm.gridApi = gridApi;
+        },
         columnDefs: [
-          { name: Utils.getMessage('NAME'), field: 'name', cellTooltip: true, cellFilter: 'toUpperCase' },
-          { name: Utils.getMessage('TRANSLATION'), field: 'translation', cellTooltip: true, cellFilter: 'toUpperCase' }
+          { name: Utils.getMessage('NAME'), field: 'name', cellTooltip: true, cellFilter: 'toUpperCase',
+            cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
+                console.log('yeeeeeeeepa');
+                if (grid.appScope.vm.hiddenColumn == 'name')
+                    return 'white';
+            }
+           },
+          { name: Utils.getMessage('TRANSLATION'), field: 'translation', cellClass:'red', cellTooltip: true, cellFilter: 'toUpperCase',
+            cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
+                if (grid.appScope.vm.hiddenColumn == 'translation')
+                    return 'white';
+            }
+          }
         ]
       };
 
-      $scope.gridOptions.data = words.data;
+      vm.gridOptions.data = words.data;
 
-      $scope.gridOptions.onRegisterApi = function (gridApi) {
-        $scope.gridApi = gridApi;
-      }
+
+/*
+        function refresh() {
+            vm.gridApi.grid.refresh();
+        }
+        */
+
+      vm.refresh = function() {
+        vm.gridApi.grid.refresh();
+      };
 
     }
 
