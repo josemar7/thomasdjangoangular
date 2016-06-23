@@ -55,7 +55,18 @@
     * @memberOf thomas.words.services.Words
     */
     function all() {
-      return $http.get('/api/v1/words/');
+      //return $http.get('/api/v1/words/');
+        return $http.get('/api/v1/words/')
+          .then(function(response) {
+            // promise is fulfilled
+            deferred.resolve(response.data);
+            return deferred.promise;
+          }, function(response) {
+            // the following line rejects the promise
+            deferred.reject(response);
+            return deferred.promise;
+          });
+
     }
 
 

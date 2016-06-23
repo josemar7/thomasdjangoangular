@@ -15,21 +15,21 @@
     });
 
 
-WordsGridController.$inject = ['$scope', '$http', 'ngDialog', 'words', 'Utils'];
+WordsGridController.$inject = ['$scope', '$http', 'ngDialog', 'words', 'Utils', 'Words'];
 
 
   /**
   * @namespace WordsGridController
   */
-  function WordsGridController($scope, $http, ngDialog, words, Utils) {
+  function WordsGridController($scope, $http, ngDialog, words, Utils, Words) {
 
       var vm = this;
 
-      vm.hiddenColumn = 'name';
+      //vm.hiddenColumn = 'name';
 
       vm.gridOptions = {
-        enableFiltering: false,
-        //paginationPageSizes: [25, 50, 75],
+        enableFiltering: true,
+        paginationPageSizes: [25, 50, 75],
         enablePaginationControls: false,
         paginationPageSize: 25,
         onRegisterApi: function(gridApi){
@@ -38,7 +38,6 @@ WordsGridController.$inject = ['$scope', '$http', 'ngDialog', 'words', 'Utils'];
         columnDefs: [
           { name: Utils.getMessage('NAME'), field: 'name', cellTooltip: true, cellFilter: 'toUpperCase',
             cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
-                console.log('yeeeeeeeepa');
                 if (grid.appScope.vm.hiddenColumn == 'name')
                     return 'white';
             }
@@ -49,20 +48,27 @@ WordsGridController.$inject = ['$scope', '$http', 'ngDialog', 'words', 'Utils'];
                     return 'white';
             }
           }
-        ]
+        ],
+
       };
 
-      vm.gridOptions.data = words.data;
+      vm.gridOptions.data = words;
 
-
-/*
-        function refresh() {
-            vm.gridApi.grid.refresh();
-        }
-        */
 
       vm.refresh = function() {
-        vm.gridApi.grid.refresh();
+        vm.gridOptions.data = [];
+
+        Words.all()
+            .then(
+              function(result) {
+                vm.gridOptions.data = result;
+              },
+              function(error) {
+                // handle errors here
+                console.log(error.statusText);
+              }
+        );
+
       };
 
     }
