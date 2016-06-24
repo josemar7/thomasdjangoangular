@@ -9,18 +9,20 @@
     .module('thomas.wordsGrid.controllers', ['ngTouch', 'ui.grid', 'ui.grid.cellNav', 'ui.grid.pinning'])
     .controller('WordsGrid1Controller', WordsGrid1Controller);
 
-WordsGrid1Controller.$inject = ['$scope', '$http', '$log'];
+WordsGrid1Controller.$inject = ['$scope', '$http', '$log', 'Words', 'Utils'];
 
 
   /**
   * @namespace WordsGridController
   */
-  function WordsGrid1Controller($scope, $http, $log) {
+  function WordsGrid1Controller($scope, $http, $log, Words, Utils) {
 
   $scope.gridOptions = {
     modifierKeysToMultiSelectCells: true,
     showGridFooter: true
   };
+
+/*
   $scope.gridOptions.columnDefs = [
     { name: 'id', width:'150' },
     { name: 'name', width:'200' },
@@ -32,11 +34,30 @@ WordsGrid1Controller.$inject = ['$scope', '$http', '$log'];
     { name: 'balance', width:'100' },
     { name: 'guid', width:'100' }
   ];
+*/
 
+  $scope.gridOptions.columnDefs = [
+          { name: Utils.getMessage('NAME'), field: 'name'},
+          { name: Utils.getMessage('TRANSLATION'), field: 'translation'}
+  ];
+
+/*
   $http.get('https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/500_complex.json')
     .success(function(data) {
       $scope.gridOptions.data = data;
     });
+*/
+
+        Words.all()
+            .then(
+              function(result) {
+                $scope.gridOptions.data = result;
+              },
+              function(error) {
+                // handle errors here
+                console.log(error.statusText);
+              }
+        );
 
     $scope.info = {};
 
@@ -45,7 +66,7 @@ WordsGrid1Controller.$inject = ['$scope', '$http', '$log'];
     $scope.getCurrentFocus = function(){
       var rowCol = $scope.gridApi.cellNav.getFocusedCell();
       if(rowCol !== null) {
-          $scope.currentFocused = 'Row Id:' + rowCol.row.entity.id + ' col:' + rowCol.col.colDef.name;
+          $scope.currentFocused = 'Row Id:' + rowCol.row.entity.id + ' col:' + rowCol.col.colDef.field;
       }
     };
 
@@ -53,7 +74,7 @@ WordsGrid1Controller.$inject = ['$scope', '$http', '$log'];
       var values = [];
       var currentSelection = $scope.gridApi.cellNav.getCurrentSelection();
       for (var i = 0; i < currentSelection.length; i++) {
-        values.push(currentSelection[i].row.entity[currentSelection[i].col.name])
+        values.push(currentSelection[i].row.entity[currentSelection[i].col.field])
       }
       $scope.printSelection = values.toString();
     };
