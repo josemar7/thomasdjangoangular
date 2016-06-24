@@ -1,0 +1,21 @@
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h3 translate="VOCABULARY"></h3>
+
+    <div class="well">
+
+      <button type="button" class="btn btn-success" ng-click="scrollTo(20,0)">Scroll To Row 20</button>
+      <button type="button" class="btn btn-success" ng-click="scrollTo(0,7)">Scroll To Balance</button>
+      <button type="button" class="btn btn-success" ng-click="scrollTo(50,7)">Scroll To Row 50, Balance</button>
+      <button type="button" class="btn btn-success" ng-click="scrollToFocus(50,7)">Focus Row 50, Balance</button>
+      <button type="button" class="btn btn-success" ng-click="getCurrentFocus()">Get Current focused cell</button>  <span ng-bind="currentFocused"></span>
+      <button type="button" class="btn btn-success" ng-click="getCurrentSelection()">Get Current focused cell values</button>
+      <input type="text" ng-model="printSelection" placeholder="Click the 'Get current focused cell values' button to print cell values of selection here" class="printSelection">
+      <br>
+      <br>
+      <div ui-grid="gridOptions" ui-grid-cellNav ui-grid-pinning class="grid"></div>
+
+    </div>
+  </div>
+</div>

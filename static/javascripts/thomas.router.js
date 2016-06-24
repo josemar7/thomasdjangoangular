@@ -49,6 +49,11 @@
                 }
             }
         })
+        .state('words2', {
+            url: "/words2",
+            controller: 'WordsGrid1Controller',
+            templateUrl: '/static/templates/wordsGrid/wordsGrid1.html'
+        })
         .state('newWord', {
             url: "/newWord",
             controller: 'NewWordController',
