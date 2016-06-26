@@ -38,4 +38,6 @@
   top: 25px;
 }
 
-.white { color: white;  }
+.hideField { color: transparent;  }
+
+.showField {color: black;}

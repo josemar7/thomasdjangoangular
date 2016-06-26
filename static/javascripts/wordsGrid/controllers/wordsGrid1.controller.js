@@ -6,99 +6,116 @@
   'use strict';
 
   angular
-    .module('thomas.wordsGrid.controllers', ['ngTouch', 'ui.grid', 'ui.grid.cellNav', 'ui.grid.pinning'])
-    .controller('WordsGrid1Controller', WordsGrid1Controller);
+    .module('thomas.wordsGrid.controllers', ['ngTouch', 'ui.grid', 'ui.grid.cellNav', 'ui.grid.pinning', 'ui.grid.edit'])
+    .controller('WordsGrid1Controller', WordsGrid1Controller)
+    .filter('toUpperCase', function () {
+      return function (value) {
+        return value.toUpperCase();
+      };
+    });
 
-WordsGrid1Controller.$inject = ['$scope', '$http', '$log', 'Words', 'Utils'];
+WordsGrid1Controller.$inject = ['$scope', '$http', '$log', 'Words', 'Utils', 'ngDialog'];
 
 
   /**
   * @namespace WordsGridController
   */
-  function WordsGrid1Controller($scope, $http, $log, Words, Utils) {
+  function WordsGrid1Controller($scope, $http, $log, Words, Utils, ngDialog) {
 
-  $scope.gridOptions = {
-    modifierKeysToMultiSelectCells: true,
-    showGridFooter: true
-  };
-
-/*
-  $scope.gridOptions.columnDefs = [
-    { name: 'id', width:'150' },
-    { name: 'name', width:'200' },
-    { name: 'age', displayName: 'Age (not focusable)', allowCellFocus : false, width:'100' },
-    { name: 'address.city', width:'200' },
-    { name: 'phone', width:'150' },
-    { name: 'company', width:'150' },
-    { name: 'email', width:'150' },
-    { name: 'balance', width:'100' },
-    { name: 'guid', width:'100' }
-  ];
-*/
-
-  $scope.gridOptions.columnDefs = [
-          { name: Utils.getMessage('NAME'), field: 'name'},
-          { name: Utils.getMessage('TRANSLATION'), field: 'translation'}
-  ];
-
-/*
-  $http.get('https://cdn.rawgit.com/angular-ui/ui-grid.info/gh-pages/data/500_complex.json')
-    .success(function(data) {
-      $scope.gridOptions.data = data;
-    });
-*/
-
-        Words.all()
-            .then(
-              function(result) {
-                $scope.gridOptions.data = result;
-              },
-              function(error) {
-                // handle errors here
-                console.log(error.statusText);
-              }
-        );
-
-    $scope.info = {};
-
-    $scope.currentFocused = "";
-
-    $scope.getCurrentFocus = function(){
-      var rowCol = $scope.gridApi.cellNav.getFocusedCell();
-      if(rowCol !== null) {
-          $scope.currentFocused = 'Row Id:' + rowCol.row.entity.id + ' col:' + rowCol.col.colDef.field;
+      function rowTemplate() {
+        return '<div ng-dblclick="grid.appScope.rowDblClick(row)" >' +
+                     '  <div ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ng-class="{ \'ui-grid-row-header-cell\': col.isRowHeader }"  ui-grid-cell></div>' +
+                     '</div>';
       }
-    };
 
-    $scope.getCurrentSelection = function() {
-      var values = [];
-      var currentSelection = $scope.gridApi.cellNav.getCurrentSelection();
-      for (var i = 0; i < currentSelection.length; i++) {
-        values.push(currentSelection[i].row.entity[currentSelection[i].col.field])
-      }
-      $scope.printSelection = values.toString();
-    };
+      $scope.rowDblClick = function( row) {
+        if (row.grid.appScope.hiddenColumn == undefined)
+            return;
+        var result;
+        if (row.grid.appScope.hiddenColumn == 'name')
+            result = row.entity.name;
+        else if (row.grid.appScope.hiddenColumn == 'translation')
+            result = row.entity.translation;
 
-    $scope.scrollTo = function( rowIndex, colIndex ) {
-      $scope.gridApi.core.scrollTo( $scope.gridOptions.data[rowIndex], $scope.gridOptions.columnDefs[colIndex]);
-    };
+        ngDialog.open({
+            template: '<p style=\'text-align: center;\'><b>' + result.toUpperCase() + '</b></p>',
+            plain: true,
+            width: 300
+        });
+      };
 
-    $scope.scrollToFocus = function( rowIndex, colIndex ) {
-      $scope.gridApi.cellNav.scrollToFocus( $scope.gridOptions.data[rowIndex], $scope.gridOptions.columnDefs[colIndex]);
-    };
+        $scope.pagination = {
+            limit: '5',
+            offset: undefined,
+            totalItems: null,
+            getTotalPages: function () {
+                return Math.ceil(this.totalItems / this.limit);
+            },
+            getCurrentPage: function () {
+                if (this.offset == undefined)
+                    return 1;
+                return Math.ceil(this.totalItems / this.offset);
 
-    $scope.gridOptions.onRegisterApi = function(gridApi){
-       $scope.gridApi = gridApi;
-       gridApi.cellNav.on.navigate($scope,function(newRowCol, oldRowCol){
-             // var rowCol = {row: newRowCol.row.index, col:newRowCol.col.colDef.name};
-             // var msg = 'New RowCol is ' + angular.toJson(rowCol);
-             // if(oldRowCol){
-             //    rowCol = {row: oldRowCol.row.index, col:oldRowCol.col.colDef.name};
-             //    msg += ' Old RowCol is ' + angular.toJson(rowCol);
-             // }
-              $log.log('navigation event');
+            },
+            nextPage: function () {
+                if (this.offset == undefined || this.offset < this.getTotalPages()) {
+                    if (this.offset == undefined)
+                        this.offset = this.limit;
+                    else
+                        this.offset = this.offset * this.limit;
+                    $scope.load();
+                }
+            },
+            previousPage: function () {
+                if (this.offset != undefined) {
+                    if (this.offset == this.limit)
+                        this.offset = undefined;
+                    else
+                        this.offset = this.offset / this.limit;
+                    $scope.load();
+                }
+            }
+        }
+
+      $scope.gridOptions = {
+        modifierKeysToMultiSelectCells: true,
+        showGridFooter: false,
+        rowTemplate: rowTemplate()
+      };
+
+        $scope.gridOptions.columnDefs = [
+            { name: Utils.getMessage('NAME'), field: 'name', cellTooltip: true, cellFilter: 'toUpperCase',
+            cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
+                if (grid.appScope.hiddenColumn == 'name')
+                    return 'hideField';
+            }
+            },
+            { name: Utils.getMessage('TRANSLATION'), field: 'translation', cellClass:'red', cellTooltip: true, cellFilter: 'toUpperCase',
+            cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
+                $log.log('cellClass');
+                if (grid.appScope.hiddenColumn == 'translation')
+                    return 'hideField';
+            }
+            }
+        ];
+
+        $scope.gridOptions.onRegisterApi = function(gridApi){
+           $scope.gridApi = gridApi;
+        };
+
+        $scope.load = function () {
+            Words.readAll($scope.pagination.limit, $scope.pagination.offset, $scope.sort, $scope.filter).then(function (response) {
+                $scope.gridOptions.data = response.data.results;
+                $scope.pagination.totalItems = response.data.count;
             });
-    };
+        }
+
+        $scope.load();
+
+        $scope.refresh = function() {
+            $scope.load();
+        };
+
     }
 
 })();

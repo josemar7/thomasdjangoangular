@@ -18,6 +18,7 @@ class WordSerializer(serializers.ModelSerializer):
 
         return exclusions + ['author']
 
+
 class WordTypeSerializer(serializers.ModelSerializer):
 
     class Meta:

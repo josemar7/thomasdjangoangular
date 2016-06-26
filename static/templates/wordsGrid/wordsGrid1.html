@@ -5,16 +5,31 @@
 
     <div class="well">
 
-      <button type="button" class="btn btn-success" ng-click="scrollTo(20,0)">Scroll To Row 20</button>
-      <button type="button" class="btn btn-success" ng-click="scrollTo(0,7)">Scroll To Balance</button>
-      <button type="button" class="btn btn-success" ng-click="scrollTo(50,7)">Scroll To Row 50, Balance</button>
-      <button type="button" class="btn btn-success" ng-click="scrollToFocus(50,7)">Focus Row 50, Balance</button>
-      <button type="button" class="btn btn-success" ng-click="getCurrentFocus()">Get Current focused cell</button>  <span ng-bind="currentFocused"></span>
-      <button type="button" class="btn btn-success" ng-click="getCurrentSelection()">Get Current focused cell values</button>
-      <input type="text" ng-model="printSelection" placeholder="Click the 'Get current focused cell values' button to print cell values of selection here" class="printSelection">
-      <br>
-      <br>
+      <div>
+        <label><h4 translate="HIDDEN_COLUMN"></h4></label><span class="glyphicon glyphicon-star"></span>
+        <label><input type="radio" ng-model="hiddenColumn" value="name" ng-change="refresh()">&#123;&#123;'NAME' | translate&#125;&#125;</label>
+        <label><input type="radio" ng-model="hiddenColumn" value="translation" ng-change="refresh()">&#123;&#123;'TRANSLATION' | translate&#125;&#125;</label>
+      </div>
+
       <div ui-grid="gridOptions" ui-grid-cellNav ui-grid-pinning class="grid"></div>
+      <br>
+      <div class="row">
+        <div class="form-group col-sm-3" >
+          <label for="numPag" translate="PAGE_NUMBERS"></label>
+          <select name="numPag" id="numPag" ng-model="pagination.limit" ng-change="refresh()">
+            <option value="2">2</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+          </select>
+        </div>
+        <div class="form-group col-sm-5">
+          <label translate="PAGINATION_MESSAGE" translate-values="{ current: pagination.getCurrentPage(), total: pagination.getTotalPages() }"></label>
+          <button type="button" class="btn btn-default" ng-click="pagination.previousPage()" ng-disabled="pagination.getCurrentPage() <= 1" title="{{'PREVIOUS_PAGE' | translate}}"><span class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span></button>
+          <button type="button" class="btn btn-default" ng-click="pagination.nextPage()" ng-disabled="pagination.getCurrentPage() >= pagination.getTotalPages()" title="{{'NEXT_PAGE' | translate}}"><span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span></button>
+          <button class="btn btn-primary" ng-controller="NewWordController as vm" ng-click="clickToOpen()" title="{{'NEW' | translate}}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+        </div>
+      </div>
 
     </div>
   </div>

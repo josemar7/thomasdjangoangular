@@ -18,9 +18,14 @@
   function Words($http, $q) {
 
     var deferred = $q.defer();
+    var anonymousToken = {
+        'AnonymousToken': '78020290-5df3-44b8-9bdb-7b3b4fea2f25'
+    };
+
 
     var Words = {
       all: all,
+      readAll: readAll,
       create: create,
       get: get,
       update: update,
@@ -67,6 +72,22 @@
             return deferred.promise;
           });
 
+    }
+
+    function readAll(limit, offset, sort, filter) {
+        return $http({
+            method: 'GET',
+            url: '/api/v1/words/',
+            params: {
+                limit: limit,
+                offset: offset,
+                sort: sort,
+                filter: filter
+            },
+            headers: anonymousToken
+        }).then(function (response) {
+            return response;
+        });
     }
 
 
