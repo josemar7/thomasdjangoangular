@@ -9,19 +9,18 @@
     .module('thomas.words.controllers')
     .controller('NewWordController', NewWordController);
 
-  NewWordController.$inject = ['$rootScope', '$scope', 'Authentication', 'Utils', 'Words', '$location', 'ngDialog'];
+  NewWordController.$inject = ['$rootScope', '$scope', 'Authentication', 'Utils', 'Words', '$location', 'ngDialog', '$state'];
 
   /**
   * @namespace NewWordController
   */
-  function NewWordController($rootScope, $scope, Authentication, Utils, Words, $location, ngDialog) {
+  function NewWordController($rootScope, $scope, Authentication, Utils, Words, $location, ngDialog, $state) {
 
     $scope.word = {};
 
-    var vm = this;
     var parent = $scope.$parent;
 
-    vm.submit = submit;
+    $scope.submit = submit;
 
     /**
     * @name submit
@@ -29,22 +28,21 @@
     * @memberOf thomas.words.controllers.NewWordController
     */
     function submit(word) {
+        $scope.closeThisDialog();
 
-      //$(wordform).data('formValidation').validate();
       var isValidForm = $(wordform).data('formValidation').isValid();
-      console.log(isValidForm);
       if (isValidForm)
         $(wordform).formValidation('destroy');
 
-      //Words.create(word).then(createWordSuccessFn, createWordErrorFn);
+      Words.create(word).then(createWordSuccessFn, createWordErrorFn);
 
       /**
       * @name createWordSuccessFn
       * @desc Show snackbar with success message
       */
       function createWordSuccessFn(data, status, headers, config) {
-        //Snackbar.show('Success! Post created.');
-          $location.path('words1');
+        Utils.getMessageWithSnack('CREATED_WORD', { word: data.data.name.toUpperCase()});
+        $state.go("words2", {}, {reload: true});
       }
 
 
@@ -63,7 +61,7 @@
         ngDialog.open({
             template: '/static/templates/words/newWord.html',
             width: 800,
-            controller: 'NewWordController as vm',
+            controller: 'NewWordController',
             scope: $scope
         });
     };

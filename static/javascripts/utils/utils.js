@@ -32,11 +32,15 @@
             return $translate.instant(name, parameters);
       }
 
-      function getMessageWithSnack(name) {
-
-        $translate(name).then(function (translation) {
-            $.snackbar({content: translation});
-        });
+      function getMessageWithSnack(name, parameters) {
+        if (parameters == undefined)
+            $translate(name).then(function (translation) {
+                $.snackbar({content: translation});
+            });
+        else
+            $translate(name, parameters).then(function (translation) {
+                $.snackbar({content: translation});
+            });
       }
 
   }

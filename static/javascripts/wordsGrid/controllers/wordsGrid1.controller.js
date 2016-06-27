@@ -54,15 +54,15 @@ WordsGrid1Controller.$inject = ['$scope', '$http', '$log', 'Words', 'Utils', 'ng
             getCurrentPage: function () {
                 if (this.offset == undefined)
                     return 1;
-                return Math.ceil(this.totalItems / this.offset);
+                return Math.ceil(Number(this.offset) / Number(this.limit)) + 1;
 
             },
             nextPage: function () {
-                if (this.offset == undefined || this.offset < this.getTotalPages()) {
+                if (this.offset == undefined || Number(this.offset) < Number(this.totalItems)) {
                     if (this.offset == undefined)
                         this.offset = this.limit;
                     else
-                        this.offset = this.offset * this.limit;
+                        this.offset = Number(this.offset) + Number(this.limit);
                     $scope.load();
                 }
             },
@@ -71,7 +71,7 @@ WordsGrid1Controller.$inject = ['$scope', '$http', '$log', 'Words', 'Utils', 'ng
                     if (this.offset == this.limit)
                         this.offset = undefined;
                     else
-                        this.offset = this.offset / this.limit;
+                        this.offset = Number(this.offset) - Number(this.limit);
                     $scope.load();
                 }
             }
@@ -92,11 +92,14 @@ WordsGrid1Controller.$inject = ['$scope', '$http', '$log', 'Words', 'Utils', 'ng
             },
             { name: Utils.getMessage('TRANSLATION'), field: 'translation', cellClass:'red', cellTooltip: true, cellFilter: 'toUpperCase',
             cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
-                $log.log('cellClass');
                 if (grid.appScope.hiddenColumn == 'translation')
                     return 'hideField';
             }
             }
+            /*
+            { name: ' ',
+            cellTemplate: '<div class="mycell"><a href="javascript:void(0)" ng-click="grid.appScope.buttonUpdateClick(row.entity)" >u&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a><a href="javascript:void(0)" ng-click="grid.appScope.buttonCreateClick()" >+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a><a href="javascript:void(0)" ng-click="grid.appScope.buttonDeleteClick(row.entity)" >-</a></div>'}
+            */
         ];
 
         $scope.gridOptions.onRegisterApi = function(gridApi){

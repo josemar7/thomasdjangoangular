@@ -4,7 +4,7 @@
 
     <div class="well well">
 
-<form name="wordform" id="wordform" role="form" ng-submit="vm.submit(word)" class="form-horizontal" >
+<form name="wordform" id="wordform" role="form" ng-submit="submit(word)" class="form-horizontal" >
 
     <div class="form-group">
       <label class="col-xs-2" for="name" translate="NAME"></label>
@@ -44,7 +44,7 @@
         <label for="type" class="col-xs-2" translate="TYPE"></label>
         <div class="col-xs-10 ">
             <select class="form-control" name="type" id="type"
-              ng-options="option.description as (option.description | uppercase) for option in word.availableOptions track by option.id"
+              ng-options="option.description for option in word.availableOptions track by option.id"
               ng-model="word.wordType">
             </select>
         </div>
