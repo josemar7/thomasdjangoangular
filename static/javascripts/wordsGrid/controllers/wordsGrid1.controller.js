@@ -80,7 +80,10 @@ WordsGrid1Controller.$inject = ['$scope', '$http', '$log', 'Words', 'Utils', 'ng
       $scope.gridOptions = {
         modifierKeysToMultiSelectCells: true,
         showGridFooter: false,
-        rowTemplate: rowTemplate()
+        rowTemplate: rowTemplate(),
+        useExternalSorting: true,
+        useExternalFiltering: true,
+        enableFiltering: true
       };
 
         $scope.gridOptions.columnDefs = [
@@ -104,6 +107,29 @@ WordsGrid1Controller.$inject = ['$scope', '$http', '$log', 'Words', 'Utils', 'ng
 
         $scope.gridOptions.onRegisterApi = function(gridApi){
            $scope.gridApi = gridApi;
+
+            $scope.gridApi.core.on.filterChanged($scope, function () {
+                $scope.filter = [];
+
+                var grid = this.grid;
+                angular.forEach(grid.columns, function (column) {
+                    var fieldName = column.field;
+                    var value = column.filters[0].term;
+                    var operator = "contains";
+                    if (value) {
+                        if (fieldName == "id") operator = "equals";
+                        else if (fieldName == "price") operator = "greaterThanOrEqualsTo";
+                        $scope.filter.push({
+                            fieldName: fieldName,
+                            operator: operator,
+                            value: value
+                        })
+                    }
+                });
+
+                $scope.load();
+            });
+
         };
 
         $scope.load = function () {

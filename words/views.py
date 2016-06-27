@@ -1,27 +1,27 @@
-from django.core.paginator import Paginator
-from django.shortcuts import render
+import django_filters
 from rest_framework import viewsets, permissions
-from rest_framework.pagination import PageNumberPagination, LimitOffsetPagination
+from rest_framework.filters import DjangoFilterBackend, FilterSet
+from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 from query_logger import DatabaseQueryLoggerMixin
 from words.models import Word, WordType
 from words.permissions import IsAuthorOfWord
 from words.serializers import WordSerializer, WordTypeSerializer
 
+class WordFilter(FilterSet):
+    name = django_filters.CharFilter(name="name", lookup_type='startswith')
+    translation = django_filters.CharFilter(name="translation", lookup_type='startswith')
+    class Meta:
+        model = Word
+        fields = ['name', 'translation']
+
 
 class WordViewSet(viewsets.ModelViewSet, DatabaseQueryLoggerMixin):
     queryset = Word.objects.order_by('name')
     serializer_class = WordSerializer
-    pagination_class = LimitOffsetPagination#PageNumberPagination
-
-    # def get_queryset(self):
-    #     self.start_query_logging()
-    #     words_list = Word.objects.order_by('-id')
-    #     self.stop_query_logging()
-    #     # paginator = Paginator(words_list, self.request.GET.get('pageSize'))
-    #     # page = self.request.GET.get('pageNumber')
-    #     # return paginator.page(page)
-    #     return words_list
+    pagination_class = LimitOffsetPagination
+    filter_backends = (DjangoFilterBackend,)
+    filter_class = WordFilter
 
     def get_permissions(self):
         if self.request.method in permissions.SAFE_METHODS:
