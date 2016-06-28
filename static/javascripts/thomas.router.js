@@ -58,17 +58,6 @@
             url: "/newWord",
             controller: 'NewWordController',
             templateUrl: '/static/templates/words/newWord.html'
-        })
-        .state('newWord1', {
-            url: "/newWord1",
-            controller: 'DialogWordController',
-            controllerAs: 'vm',
-            resolve: {
-                wordsType: function(Words) {
-                    return Words.allWordType();
-                }
-            }
         });
-
   }
 })();

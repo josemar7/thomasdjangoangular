@@ -98,15 +98,37 @@ WordsGrid1Controller.$inject = ['$scope', '$http', '$log', 'Words', 'Utils', 'ng
                 if (grid.appScope.hiddenColumn == 'translation')
                     return 'hideField';
             }
+            },
+            { name: ' ', maxWidth: 75, enableFiltering: false, enableSorting: false, enableColumnMenu: false,
+            cellTemplate: '<div><a href="javascript:void(0)" ng-click="grid.appScope.buttonUpdateClick(row.entity)" class="col-sm-1" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a><a href="javascript:void(0)" ng-click="grid.appScope.buttonDeleteClick(row.entity)" class="col-sm-1"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div>'
             }
-            /*
-            { name: ' ',
-            cellTemplate: '<div class="mycell"><a href="javascript:void(0)" ng-click="grid.appScope.buttonUpdateClick(row.entity)" >u&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a><a href="javascript:void(0)" ng-click="grid.appScope.buttonCreateClick()" >+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a><a href="javascript:void(0)" ng-click="grid.appScope.buttonDeleteClick(row.entity)" >-</a></div>'}
-            */
         ];
+
+        $scope.buttonUpdateClick = function (value) {
+            ngDialog.open({
+                template: '/static/templates/words/newWord.html',
+                data: {
+                'word': value
+                },
+                width: 800,
+                controller: 'NewWordController',
+                scope: $scope
+            });
+        };
 
         $scope.gridOptions.onRegisterApi = function(gridApi){
            $scope.gridApi = gridApi;
+
+            $scope.gridApi.core.on.sortChanged($scope, function (grid, sortColumns) {
+                $scope.sort = [];
+                angular.forEach(sortColumns, function (sortColumn) {
+                    $scope.sort.push({
+                        fieldName: sortColumn.field,
+                        order: sortColumn.sort.direction
+                    });
+                });
+                $scope.load();
+            });
 
             $scope.gridApi.core.on.filterChanged($scope, function () {
                 $scope.filter = [];
@@ -115,13 +137,9 @@ WordsGrid1Controller.$inject = ['$scope', '$http', '$log', 'Words', 'Utils', 'ng
                 angular.forEach(grid.columns, function (column) {
                     var fieldName = column.field;
                     var value = column.filters[0].term;
-                    var operator = "contains";
                     if (value) {
-                        if (fieldName == "id") operator = "equals";
-                        else if (fieldName == "price") operator = "greaterThanOrEqualsTo";
                         $scope.filter.push({
                             fieldName: fieldName,
-                            operator: operator,
                             value: value
                         })
                     }

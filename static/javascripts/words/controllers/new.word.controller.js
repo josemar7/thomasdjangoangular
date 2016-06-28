@@ -16,7 +16,10 @@
   */
   function NewWordController($rootScope, $scope, Authentication, Utils, Words, $location, ngDialog, $state) {
 
-    $scope.word = {};
+    if ($scope.ngDialogData != undefined && $scope.ngDialogData.word != undefined)
+        $scope.word = $scope.ngDialogData.word;
+
+    //$scope.word = {};
 
     var parent = $scope.$parent;
 
@@ -66,22 +69,22 @@
         });
     };
 
-    $scope.$on('ngDialog.opened', function (e, $dialog) {
+    Words.allWordType()
+    .then(
+      function(result) {
+          $scope.word = {
+            favorite: 'true',
+            availableOptions: result,
+            wordType: {id: result[1].id, description: result[1].description} //This sets the default value of the select in the ui
+          };
+      },
+      function(error) {
+        // handle errors here
+        console.log(error.statusText);
+      }
+    );
 
-      Words.allWordType()
-        .then(
-          function(result) {
-              $scope.word = {
-                favorite: 'true',
-                availableOptions: result,
-                wordType: {id: result[1].id, description: result[1].description} //This sets the default value of the select in the ui
-              };
-          },
-          function(error) {
-            // handle errors here
-            console.log(error.statusText);
-          }
-        );
+    $scope.$on('ngDialog.opened', function (e, $dialog) {
 
         $(wordform).formValidation({
             framework: 'bootstrap',

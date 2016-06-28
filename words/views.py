@@ -1,6 +1,6 @@
 import django_filters
 from rest_framework import viewsets, permissions
-from rest_framework.filters import DjangoFilterBackend, FilterSet
+from rest_framework.filters import DjangoFilterBackend, FilterSet, OrderingFilter
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 from query_logger import DatabaseQueryLoggerMixin
@@ -20,8 +20,9 @@ class WordViewSet(viewsets.ModelViewSet, DatabaseQueryLoggerMixin):
     queryset = Word.objects.order_by('name')
     serializer_class = WordSerializer
     pagination_class = LimitOffsetPagination
-    filter_backends = (DjangoFilterBackend,)
+    filter_backends = (DjangoFilterBackend, OrderingFilter,)
     filter_class = WordFilter
+    ordering_fields = ('name', 'translation')
 
     def get_permissions(self):
         if self.request.method in permissions.SAFE_METHODS:

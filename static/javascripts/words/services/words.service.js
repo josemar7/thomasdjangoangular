@@ -75,14 +75,35 @@
     }
 
     function readAll(limit, offset, sort, filter) {
+        var name, translation, ordering = '';
+        if (sort != undefined) {
+            sort.forEach(function(currentValue,index,arr) {
+                if (currentValue.order == 'desc')
+                    ordering += '-' + currentValue.fieldName;
+                else
+                    ordering += currentValue.fieldName;
+                if (index < arr.length -1)
+                    ordering += ',';
+            });
+        }
+
+        if (filter != undefined) {
+            filter.forEach(function(currentValue,index,arr) {
+                if (currentValue.fieldName == 'name')
+                    name = currentValue.value;
+                else if (currentValue.fieldName == 'translation')
+                    translation = currentValue.value;
+            });
+        }
         return $http({
             method: 'GET',
             url: '/api/v1/words/',
             params: {
                 limit: limit,
                 offset: offset,
-                sort: sort,
-                filter: filter
+                ordering: ordering,
+                name: name,
+                translation: translation
             },
             headers: anonymousToken
         }).then(function (response) {
