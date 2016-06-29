@@ -10,7 +10,8 @@
       'thomas.translation',
       'thomas.words',
       'thomas.wordsGrid',
-      'thomas.utils'
+      'thomas.utils',
+      'thomas.validations'
     ])
     .run(run);
 
@@ -30,6 +31,8 @@
 
   angular
     .module('thomas.utils', []);
+  angular
+    .module('thomas.validations', []);
 
 
 })();

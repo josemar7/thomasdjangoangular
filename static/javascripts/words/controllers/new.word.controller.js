@@ -9,12 +9,12 @@
     .module('thomas.words.controllers')
     .controller('NewWordController', NewWordController);
 
-  NewWordController.$inject = ['$rootScope', '$scope', 'Authentication', 'Utils', 'Words', '$location', 'ngDialog', '$state', '$log'];
+  NewWordController.$inject = ['$rootScope', '$scope', 'Utils', 'Words', 'ngDialog', '$state', '$log', 'Validations'];
 
   /**
   * @namespace NewWordController
   */
-  function NewWordController($rootScope, $scope, Authentication, Utils, Words, $location, ngDialog, $state, $log) {
+  function NewWordController($rootScope, $scope, Utils, Words, ngDialog, $state, $log, Validations) {
 
     $scope.submit = submit;
 
@@ -24,13 +24,19 @@
     * @memberOf thomas.words.controllers.NewWordController
     */
     function submit(word) {
-        $scope.closeThisDialog();
 
       var isValidForm = $(wordform).data('formValidation').isValid();
-      if (isValidForm)
+      if (isValidForm == null) {
         $(wordform).formValidation('destroy');
+        $(wordform).formValidation(Validations.getValidationWords()).formValidation('validate');
+        isValidForm = $(wordform).data('formValidation').isValid();
+      }
 
-      Words.create(word).then(createWordSuccessFn, createWordErrorFn);
+      if (isValidForm) {
+        $(wordform).formValidation('destroy');
+        Words.create(word).then(createWordSuccessFn, createWordErrorFn);
+        $scope.closeThisDialog();
+      }
 
       /**
       * @name createWordSuccessFn
@@ -79,33 +85,7 @@
     );
 
     $scope.$on('ngDialog.opened', function (e, $dialog) {
-
-        $(wordform).formValidation({
-            framework: 'bootstrap',
-            icon: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                name: {
-                    validators: {
-                        notEmpty: {
-                            message: Utils.getMessage('REQUIRED_FIELD', { field: Utils.getMessage('NAME') })
-                        }
-                    }
-                },
-                translation: {
-                    validators: {
-                        notEmpty: {
-                            message: Utils.getMessage('REQUIRED_FIELD', { field: Utils.getMessage('TRANSLATION') })
-                        }
-                    }
-                }
-
-            }
-        });
-
+        $(wordform).formValidation(Validations.getValidationWords());
     });
 
   }

@@ -9,12 +9,12 @@
     .module('thomas.words.controllers')
     .controller('UpdateWordController', UpdateWordController);
 
-  UpdateWordController.$inject = ['$rootScope', '$scope', 'Authentication', 'Utils', 'Words', '$location', 'ngDialog', '$state', '$log'];
+  UpdateWordController.$inject = ['$rootScope', '$scope', 'Utils', 'Words', 'ngDialog', '$state', '$log', 'Validations'];
 
   /**
   * @namespace UpdateWordController
   */
-  function UpdateWordController($rootScope, $scope, Authentication, Utils, Words, $location, ngDialog, $state, $log) {
+  function UpdateWordController($rootScope, $scope, Utils, Words, ngDialog, $state, $log, Validations) {
 
     $scope.word = $scope.ngDialogData.word;
     //$scope.id = $scope.ngDialogData.word.id;
@@ -29,25 +29,27 @@
     */
     function submit(word) {
 
-      $scope.closeThisDialog();
       var isValidForm = $(wordform).data('formValidation').isValid();
-
-      if (isValidForm)
+      if (isValidForm == null) {
         $(wordform).formValidation('destroy');
+        $(wordform).formValidation(Validations.getValidationWords()).formValidation('validate');
+        isValidForm = $(wordform).data('formValidation').isValid();
+      }
 
-      word.id = id;
-
-      Words.update(word).then(createWordSuccessFn, createWordErrorFn);
+      if (isValidForm) {
+        $(wordform).formValidation('destroy');
+        word.id = id;
+        Words.update(word).then(createWordSuccessFn, createWordErrorFn);
+        $scope.closeThisDialog();
+      }
 
       /**
       * @name createWordSuccessFn
       * @desc Show snackbar with success message
       */
       function createWordSuccessFn(data, status, headers, config) {
-      /*
         Utils.getMessageWithSnack('UPDATED_WORD', { word: data.data.name.toUpperCase()});
         $state.go("words2", {}, {reload: true});
-        */
       }
 
 
@@ -80,31 +82,7 @@
 
     $scope.$on('ngDialog.opened', function (e, $dialog) {
 
-        $(wordform).formValidation({
-            framework: 'bootstrap',
-            icon: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                name: {
-                    validators: {
-                        notEmpty: {
-                            message: Utils.getMessage('REQUIRED_FIELD', { field: Utils.getMessage('NAME') })
-                        }
-                    }
-                },
-                translation: {
-                    validators: {
-                        notEmpty: {
-                            message: Utils.getMessage('REQUIRED_FIELD', { field: Utils.getMessage('TRANSLATION') })
-                        }
-                    }
-                }
-
-            }
-        });
+        $(wordform).formValidation(Validations.getValidationWords());
 
     });
   }
