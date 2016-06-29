@@ -39,7 +39,7 @@
             });
         else
             $translate(name, parameters).then(function (translation) {
-                $.snackbar({content: translation});
+                $.snackbar({content: translation, timeout: 1000, style: 'snackbarstyle',});
             });
       }
 

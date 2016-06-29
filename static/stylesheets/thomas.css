@@ -30,14 +30,11 @@
     .row.content {height:auto;}
   }
 
-.gridxxx {
-  width: 1000px;
-  height: 300px;
-  position: absolute;
-  left: 10%;
-  top: 25px;
-}
-
 .hideField { color: transparent;  }
 
-.showField {color: black;}
+.snackbarstyle {
+    background-color: black;
+    color: white;
+    padding: 20px;
+    -webkit-border-radius: 99px;-moz-border-radius: 99px;border-radius: 99px;
+}
