@@ -1,5 +1,5 @@
 /**
-* NewWordController
+* UpdateWordController
 * @namespace thomas.words.controllers
 */
 (function () {
@@ -7,38 +7,47 @@
 
   angular
     .module('thomas.words.controllers')
-    .controller('NewWordController', NewWordController);
+    .controller('UpdateWordController', UpdateWordController);
 
-  NewWordController.$inject = ['$rootScope', '$scope', 'Authentication', 'Utils', 'Words', '$location', 'ngDialog', '$state', '$log'];
+  UpdateWordController.$inject = ['$rootScope', '$scope', 'Authentication', 'Utils', 'Words', '$location', 'ngDialog', '$state', '$log'];
 
   /**
-  * @namespace NewWordController
+  * @namespace UpdateWordController
   */
-  function NewWordController($rootScope, $scope, Authentication, Utils, Words, $location, ngDialog, $state, $log) {
+  function UpdateWordController($rootScope, $scope, Authentication, Utils, Words, $location, ngDialog, $state, $log) {
+
+    $scope.word = $scope.ngDialogData.word;
+    //$scope.id = $scope.ngDialogData.word.id;
+    var id = $scope.ngDialogData.word.id;
 
     $scope.submit = submit;
 
     /**
     * @name submit
-    * @desc Create a new Word
-    * @memberOf thomas.words.controllers.NewWordController
+    * @desc Update a new Word
+    * @memberOf thomas.words.controllers.UpdateWordController
     */
     function submit(word) {
-        $scope.closeThisDialog();
 
+      $scope.closeThisDialog();
       var isValidForm = $(wordform).data('formValidation').isValid();
+
       if (isValidForm)
         $(wordform).formValidation('destroy');
 
-      Words.create(word).then(createWordSuccessFn, createWordErrorFn);
+      word.id = id;
+
+      Words.update(word).then(createWordSuccessFn, createWordErrorFn);
 
       /**
       * @name createWordSuccessFn
       * @desc Show snackbar with success message
       */
       function createWordSuccessFn(data, status, headers, config) {
-        Utils.getMessageWithSnack('CREATED_WORD', { word: data.data.name.toUpperCase()});
+      /*
+        Utils.getMessageWithSnack('UPDATED_WORD', { word: data.data.name.toUpperCase()});
         $state.go("words2", {}, {reload: true});
+        */
       }
 
 
@@ -48,29 +57,20 @@
       */
       function createWordErrorFn(data, status, headers, config) {
         $rootScope.$broadcast('word.created.error');
-        Snackbar.error(data.error);
+        $log.log(data.error);
       }
     }
-
-
-    $scope.clickToOpen = function () {
-        ngDialog.open({
-            template: '/static/templates/words/newWord.html',
-            width: 800,
-            controller: 'NewWordController',
-            scope: $scope
-        });
-    };
 
     Words.allWordType()
     .then(
       function(result) {
-          $scope.word = {
-            favorite: 'true',
-            //availableOptions: result,
-            wordType: {id: result[1].id, description: result[1].description} //This sets the default value of the select in the ui
-          };
-          $scope.word.availableOptions = result;
+        result.forEach(function(currentValue,index,arr) {
+            if (currentValue.id == $scope.word.wordType) {
+                $scope.word.wordType = currentValue;
+                return;
+            }
+        });
+        $scope.word.availableOptions = result;
       },
       function(error) {
         // handle errors here
@@ -107,7 +107,7 @@
         });
 
     });
-
   }
+
 
 })();

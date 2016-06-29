@@ -15,7 +15,7 @@ class WordType(models.Model):
 class Word(models.Model):
     name = models.CharField(null=False, max_length=100)
     translation = models.CharField(null=False, max_length=200)
-    comment = models.TextField(null=True)
+    comment = models.TextField(null=True, blank=True)
     favorite = models.BooleanField(default=True)
     wordType = models.ForeignKey(WordType)
     author = models.ForeignKey(Account)

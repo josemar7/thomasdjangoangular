@@ -130,7 +130,12 @@
     }
 
     function update(word) {
-      return $http.put('/api/v1/words/' + word.id + '/', word);
+      var wordTypeId = word.wordType.id;
+      word.wordType = wordTypeId;
+      return $http.put('/api/v1/words/' + word.id + '/', word)
+        .then(function (response) {
+                    return response;
+                });
     }
 
     /**

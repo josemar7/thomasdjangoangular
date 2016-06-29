@@ -111,7 +111,7 @@ WordsGrid1Controller.$inject = ['$scope', '$http', '$log', 'Words', 'Utils', 'ng
                 'word': value
                 },
                 width: 800,
-                controller: 'NewWordController',
+                controller: 'UpdateWordController',
                 scope: $scope
             });
         };
