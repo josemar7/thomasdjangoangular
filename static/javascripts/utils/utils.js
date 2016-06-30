@@ -35,12 +35,18 @@
       function getMessageWithSnack(name, parameters) {
         if (parameters == undefined)
             $translate(name).then(function (translation) {
-                $.snackbar({content: translation});
+                //$.snackbar({content: translation, timeout: 2000, style: 'snackbarstyle',});
+                paintSnackBar(translation);
             });
         else
             $translate(name, parameters).then(function (translation) {
-                $.snackbar({content: translation, timeout: 1000, style: 'snackbarstyle',});
+                //$.snackbar({content: translation, timeout: 2000, style: 'snackbarstyle',});
+                paintSnackBar(translation);
             });
+      }
+
+      function paintSnackBar(translation) {
+        $.snackbar({content: translation, timeout: 2000, style: 'snackbarstyle',});
       }
 
   }

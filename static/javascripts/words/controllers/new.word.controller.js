@@ -85,7 +85,8 @@
     );
 
     $scope.$on('ngDialog.opened', function (e, $dialog) {
-        $(wordform).formValidation(Validations.getValidationWords());
+        if ($dialog.name == undefined || $dialog.name == 'dlgUpdate')
+            $(wordform).formValidation(Validations.getValidationWords());
     });
 
   }

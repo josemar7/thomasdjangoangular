@@ -112,9 +112,27 @@ WordsGrid1Controller.$inject = ['$scope', '$http', '$log', 'Words', 'Utils', 'ng
                 },
                 width: 800,
                 controller: 'UpdateWordController',
-                scope: $scope
+                scope: $scope,
+                name: 'dlgUpdate'
             });
         };
+
+        $scope.buttonDeleteClick = function(value) {
+            ngDialog.openConfirm({
+                template: '/static/templates/words/delete-word.html',
+                data: {
+                'word': value
+                },
+                controller: 'DeleteWordController',
+                scope: $scope,
+                name: 'dlgDelete'
+            }).then(function (confirm) {
+                submit();
+            }, function(reject) {
+                $log.log('Rejected');
+            });
+        };
+
 
         $scope.gridOptions.onRegisterApi = function(gridApi){
            $scope.gridApi = gridApi;

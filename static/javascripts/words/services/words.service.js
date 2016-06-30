@@ -150,7 +150,7 @@
     }
 
     function destroy(word) {
-      return $http.delete('/api/v1/words/' + word + '/');
+      return $http.delete('/api/v1/words/' + word.id + '/');
     }
 
   }
