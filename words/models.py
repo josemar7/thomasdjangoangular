@@ -13,7 +13,7 @@ class WordType(models.Model):
         return '{0}'.format(self.content)
 
 class Word(models.Model):
-    name = models.CharField(null=False, max_length=100)
+    name = models.CharField(null=False, max_length=100, unique=True)
     translation = models.CharField(null=False, max_length=200)
     comment = models.TextField(null=True, blank=True)
     favorite = models.BooleanField(default=True)

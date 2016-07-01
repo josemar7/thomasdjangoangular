@@ -3,6 +3,7 @@ from rest_framework import viewsets, permissions
 from rest_framework.filters import DjangoFilterBackend, FilterSet, OrderingFilter
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
+from rest_framework import status
 from query_logger import DatabaseQueryLoggerMixin
 from words.models import Word, WordType
 from words.permissions import IsAuthorOfWord
@@ -29,9 +30,18 @@ class WordViewSet(viewsets.ModelViewSet, DatabaseQueryLoggerMixin):
             return (permissions.AllowAny(),)
         return (permissions.IsAuthenticated(), IsAuthorOfWord(),)
 
+    def create(self, request, *args, **kwargs):
+        try:
+            serializer = self.get_serializer(data=request.data)
+            result = serializer.is_valid(raise_exception=True)
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        except Exception as exc:
+            return Response(serializer.data, status=666)
+
     def perform_create(self, serializer):
         instance = serializer.save(author=self.request.user)
-
         return super(WordViewSet, self).perform_create(serializer)
 
 class WordTypeViewSet(viewsets.ModelViewSet):

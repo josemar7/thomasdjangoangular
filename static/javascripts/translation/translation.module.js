@@ -41,6 +41,7 @@
       UPDATED_WORD: 'The word {{word}} has been updated',
       USERNAME: 'Username',
       VOCABULARY: 'Vocabulary',
+      WORD_EXISTS: 'Word {{word}} exists in the data base',
       WORDS: 'Words',
       YES: 'Yes'
     };
@@ -85,6 +86,7 @@
       UPDATED_WORD: 'La palabra {{word}} ha sido actualizada',
       USERNAME: 'Usuario',
       VOCABULARY: 'Vocabulario',
+      WORD_EXISTS: 'La palabra {{word}} ya existe en la base de datos',
       WORDS: 'Palabras',
       YES: 'Si'
 

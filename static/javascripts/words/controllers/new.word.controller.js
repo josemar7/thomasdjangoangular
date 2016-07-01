@@ -35,14 +35,15 @@
       if (isValidForm) {
         $(wordform).formValidation('destroy');
         Words.create(word).then(createWordSuccessFn, createWordErrorFn);
-        $scope.closeThisDialog();
+        //$scope.closeThisDialog();
       }
 
       /**
       * @name createWordSuccessFn
       * @desc Show snackbar with success message
       */
-      function createWordSuccessFn(data, status, headers, config) {
+      function createWordSuccessFn(data) {
+        $scope.closeThisDialog();
         Utils.getMessageWithSnack('CREATED_WORD', { word: data.data.name.toUpperCase()});
         $state.go("words2", {}, {reload: true});
       }
@@ -52,9 +53,10 @@
       * @name createWordErrorFn
       * @desc Propogate error event and show snackbar with error message
       */
-      function createWordErrorFn(data, status, headers, config) {
-        $rootScope.$broadcast('word.created.error');
-        Snackbar.error(data.error);
+      function createWordErrorFn(data) {
+        $('button[type="submit"]').prop('disabled', false);
+        if (data.status == 666)
+            Utils.getMessageWithSnack('WORD_EXISTS', { word: data.data.name.toUpperCase()});
       }
     }
 
