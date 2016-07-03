@@ -11,7 +11,8 @@
       'thomas.words',
       'thomas.wordsGrid',
       'thomas.utils',
-      'thomas.validations'
+      'thomas.validations',
+      'thomas.forms'
     ])
     .run(run);
 

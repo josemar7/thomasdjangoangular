@@ -25,6 +25,9 @@
     */
     function submit(word) {
 
+      if ($(wordform).data('formValidation') == undefined)
+        $(wordform).formValidation(Validations.getValidationWords());
+
       var isValidForm = $(wordform).data('formValidation').isValid();
       if (isValidForm == null) {
         $(wordform).formValidation('destroy');
@@ -54,7 +57,6 @@
       * @desc Propogate error event and show snackbar with error message
       */
       function createWordErrorFn(data) {
-        $('button[type="submit"]').prop('disabled', false);
         if (data.status == 666)
             Utils.getMessageWithSnack('WORD_EXISTS', { word: data.data.name.toUpperCase()});
       }

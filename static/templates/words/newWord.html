@@ -9,14 +9,14 @@
     <div class="form-group">
       <label class="col-xs-2" for="name" translate="NAME"></label>
       <div class="col-xs-10">
-        <input type="text" class="form-control" id="name" name="name" ng-model="word.name" />
+        <input type="text" class="form-control" id="name" name="name" ng-model="word.name" focus="true" />
       </div>
     </div>
 
     <div class="form-group">
       <label class="col-xs-2" for="translation" translate="TRANSLATION"></label>
       <div class="col-xs-10">
-        <input type="text" class="form-control" id="translation" name="translation" ng-model="word.translation"  />
+        <input type="text" class="form-control" id="translation" name="translation" ng-model="word.translation" />
       </div>
     </div>
 
@@ -52,7 +52,7 @@
 
     <div class="form-group">
         <div class="col-xs-9 col-xs-offset-3">
-            <button type="submit" class="btn btn-primary" translate="SAVE" ></button>
+            <button type="button" class="btn btn-primary" translate="SAVE" ng-click="submit(word)" ></button>
         </div>
     </div>
 

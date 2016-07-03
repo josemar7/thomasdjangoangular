@@ -17,7 +17,8 @@
   */
   function Validations(Utils) {
     var Validations = {
-      getValidationWords: getValidationWords
+      getValidationWords: getValidationWords,
+      getValidationRegistration: getValidationRegistration
     };
 
     return Validations;
@@ -55,6 +56,49 @@
         return validateOptions;
 
       }
+
+      function getValidationRegistration() {
+
+        var validateOptions =
+        {
+            framework: 'bootstrap',
+            icon: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                email: {
+                    validators: {
+                        notEmpty: {
+                            message: Utils.getMessage('REQUIRED_FIELD', { field: Utils.getMessage('EMAIL') })
+                        },
+                        emailAddress: {
+                            message: Utils.getMessage('EMAIL_ERROR')
+                        }
+                    }
+                },
+                username: {
+                    validators: {
+                        notEmpty: {
+                            message: Utils.getMessage('REQUIRED_FIELD', { field: Utils.getMessage('USERNAME') })
+                        }
+                    }
+                },
+                password: {
+                    validators: {
+                        notEmpty: {
+                            message: Utils.getMessage('REQUIRED_FIELD', { field: Utils.getMessage('PASSWORD') })
+                        }
+                    }
+                }
+
+            }
+        };
+        return validateOptions;
+
+      }
+
 
 
   }

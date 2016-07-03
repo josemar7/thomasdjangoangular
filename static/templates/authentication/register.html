@@ -3,24 +3,24 @@
     <h3 translate="REGISTER"></h3>
 
     <div class="well">
-      <form role="form" ng-submit="vm.register()">
+      <form role="form" name="regform" id="regform" >
         <div class="form-group">
-          <label for="register__email" translate="EMAIL"></label>
-          <input type="email" class="form-control" id="register__email" ng-model="vm.email" placeholder="ex. john@notgoogle.com" />
+          <label for="email" translate="EMAIL"></label>
+          <input type="email" class="form-control" id="email" name="email" ng-model="user.email" placeholder="ex. john@notgoogle.com" />
         </div>
 
         <div class="form-group">
-          <label for="register__username" translate="USERNAME"></label>
-          <input type="text" class="form-control" id="register__username" ng-model="vm.username" placeholder="ex. john" />
+          <label for="username" translate="USERNAME"></label>
+          <input type="text" class="form-control" id="username" name="username" ng-model="user.username" placeholder="ex. john" />
         </div>
 
         <div class="form-group">
-          <label for="register__password" translate="PASSWORD"></label>
-          <input type="password" class="form-control" id="register__password" ng-model="vm.password" placeholder="ex. thisisnotgoogleplus" />
+          <label for="password" translate="PASSWORD"></label>
+          <input type="password" class="form-control" id="password" name="password" ng-model="user.password" placeholder="ex. thisisnotgoogleplus" />
         </div>
 
         <div class="form-group">
-          <button type="submit" class="btn btn-primary" translate="ACCEPT"></button>
+          <button type="button" class="btn btn-primary" ng-click="register(user)" translate="ACCEPT"></button>
         </div>
       </form>
     </div>
