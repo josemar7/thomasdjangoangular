@@ -41,8 +41,8 @@ class WordViewSet(viewsets.ModelViewSet, DatabaseQueryLoggerMixin):
             return Response(serializer.data, status=666)
 
     def perform_create(self, serializer):
-        instance = serializer.save(author=self.request.user)
-        return super(WordViewSet, self).perform_create(serializer)
+        return serializer.save(author=self.request.user)
+        # return super(WordViewSet, self).perform_create(serializer)
 
 class WordTypeViewSet(viewsets.ModelViewSet):
     queryset = WordType.objects.order_by('-created_at')
