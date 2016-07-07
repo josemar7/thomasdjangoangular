@@ -47,6 +47,11 @@
             url: "/newWord",
             controller: 'NewWordController',
             templateUrl: '/static/templates/words/newWord.html'
+        })
+        .state('test', {
+            url: "/test",
+            controller: 'TestsController',
+            templateUrl: '/static/templates/tests/test.html'
         });
   }
 })();
