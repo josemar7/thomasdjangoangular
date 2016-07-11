@@ -12,7 +12,8 @@
       'thomas.wordsGrid',
       'thomas.utils',
       'thomas.validations',
-      'thomas.forms'
+      'thomas.forms',
+      'thomas.tests'
     ])
     .run(run);
 

@@ -3,6 +3,7 @@ from django.conf.urls import patterns, url, include
 from rest_framework_nested import routers
 
 from authentication.views import AccountViewSet, LoginView, LogoutView
+from tests.views import TestWordsViewSet
 from thomas.views import IndexView
 from words.views import WordViewSet, AccountWordsViewSet, WordTypeViewSet
 
@@ -11,6 +12,7 @@ router = routers.SimpleRouter()
 router.register(r'accounts', AccountViewSet)
 router.register(r'words', WordViewSet)
 router.register(r'wordsType', WordTypeViewSet)
+router.register(r'tests', TestWordsViewSet)
 
 accounts_router = routers.NestedSimpleRouter(
     router, r'accounts', lookup='account'
