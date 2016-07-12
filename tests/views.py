@@ -1,6 +1,5 @@
 import random
 
-from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.response import Response
 
@@ -10,16 +9,11 @@ from words.serializers import WordSerializer
 
 class TestWordsViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = WordSerializer
-    queryset = Word.objects.order_by('?')
+    queryset = Word.objects.order_by('?')[:10]
 
     def list(self, request, *args, **kwargs):
-
-        #request.query_params['num_questions']
-        page = self.paginate_queryset(self.queryset)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
+        n = int(request.query_params['num_questions'])
+        self.queryset = Word.objects.order_by('?')[:n]
 
         serializer = self.get_serializer(self.queryset, many=True)
         return Response(serializer.data)
-
