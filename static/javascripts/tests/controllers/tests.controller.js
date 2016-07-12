@@ -17,7 +17,7 @@
   function TestsController($scope, $log, Tests) {
 
         $scope.load = function () {
-            Tests.test().then(function (response) {
+            Tests.test(25).then(function (response) {
                 $log.log('hello!!!');
             });
         }

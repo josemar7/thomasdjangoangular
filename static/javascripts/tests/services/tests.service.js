@@ -37,9 +37,21 @@
     * @returns {Promise}
     * @memberOf thomas.tests.services.Tests
     */
-    function test() {
-      //return $http.get('/api/v1/words/');
-        return $http.get('/api/v1/tests/')
+    function test(num_questions) {
+        return $http({
+            method: 'GET',
+            url: '/api/v1/tests/',
+            params: {
+                num_questions: num_questions
+            }
+        }).then(function (response) {
+            return response;
+        });
+
+/*
+        return $http.get('/api/v1/tests/', {
+            num_questions: num_questions
+        })
           .then(function(response) {
             // promise is fulfilled
             deferred.resolve(response.data);
@@ -49,6 +61,7 @@
             deferred.reject(response);
             return deferred.promise;
           });
+*/
 
     }
 
