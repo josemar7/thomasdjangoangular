@@ -18,7 +18,8 @@
   function Validations(Utils) {
     var Validations = {
       getValidationWords: getValidationWords,
-      getValidationRegistration: getValidationRegistration
+      getValidationRegistration: getValidationRegistration,
+      getValidationTests: getValidationTests
     };
 
     return Validations;
@@ -89,6 +90,39 @@
                     validators: {
                         notEmpty: {
                             message: Utils.getMessage('REQUIRED_FIELD', { field: Utils.getMessage('PASSWORD') })
+                        }
+                    }
+                }
+
+            }
+        };
+        return validateOptions;
+
+      }
+
+
+      function getValidationTests() {
+
+        var validateOptions =
+        {
+            framework: 'bootstrap',
+            icon: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                modality: {
+                    validators: {
+                        notEmpty: {
+                            message: Utils.getMessage('REQUIRED_FIELD', { field: Utils.getMessage('MODALITY') })
+                        }
+                    }
+                },
+                words_number: {
+                    validators: {
+                        notEmpty: {
+                            message: Utils.getMessage('REQUIRED_FIELD', { field: Utils.getMessage('WORDS_NUMBER') })
                         }
                     }
                 }

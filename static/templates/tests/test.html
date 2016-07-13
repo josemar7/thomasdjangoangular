@@ -1,5 +1,29 @@
+
 <div class="row">
-  <div class="col-sm-12">
-      test
+  <div class="col-md-8 col-md-offset-2">
+    <h3 translate="TEST"></h3>
+
+    <form name="testform" id="testform" role="form" class="form-inline" >
+        <div class="well">
+
+          <div class="form-group form-control-sm">
+            <label translate="MODALITY"></label>
+            <select name="modality" id="modality" ng-model="modality" ng-change="">
+              <option translate="ENGLISH_SPANISH" value="en_es"></option>
+              <option translate="SPANISH_ENGLISH" value="es_en"></option>
+            </select>
+          </div>
+
+          <div class="form-group form-control-sm">
+            <label translate="WORDS_NUMBER"></label>
+            <input type="number" name="input" name="words_number" id="words_number" ng-model="words_number" min="5" max="100" >
+          </div>
+
+          <div class="form-group form-control-sm">
+            <button type="button" class="btn btn-primary" ng-click="submit(modality, words_number)" translate="TEST"></button>
+          </div>
+
+        </div>
+    </form>
   </div>
 </div>

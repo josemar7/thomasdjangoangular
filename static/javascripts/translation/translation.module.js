@@ -23,8 +23,10 @@
       DELETED_WORD: 'The word has been deleted',
       EMAIL: 'Email',
       EMAIL_ERROR: 'Email is not valid',
+      ENGLISH_SPANISH: 'English - Spanish',
       FAVORITE: 'Favorite',
       HIDDEN_COLUMN: 'Hidden column',
+      MODALITY: 'Modality',
       NAME: 'Name',
       NEW: 'New',
       NEW_WORD: 'New Word',
@@ -37,6 +39,7 @@
       REQUIRED_FIELD: 'The field "{{field}}" is required',
       SAVE: 'Save',
       SNACK: 'This is my awesome snackbar!',
+      SPANISH_ENGLISH: 'Spanish - English',
       TEST: 'Test',
       TRANSLATION: 'Translation',
       TYPE: 'Type',
@@ -45,6 +48,7 @@
       VOCABULARY: 'Vocabulary',
       WORD_EXISTS: 'Word {{word}} exists in the data base',
       WORDS: 'Words',
+      WORDS_NUMBER: 'Words number',
       YES: 'Yes'
     };
 
@@ -70,8 +74,10 @@
       DELETED_WORD: 'La palabra ha sido borrada',
       EMAIL: 'Email',
       EMAIL_ERROR: 'El Email es incorrecto',
+      ENGLISH_SPANISH: 'Inglés - Español',
       FAVORITE: 'Favorita',
       HIDDEN_COLUMN: 'Ocultar columna',
+      MODALITY: 'Modalidad',
       NAME: 'Nombre',
       NEW: 'Nuevo',
       NEW_WORD: 'Nueva Palabra',
@@ -84,6 +90,7 @@
       REQUIRED_FIELD: 'El campo "{{field}}" es obligatorio',
       SAVE: 'Guardar',
       SNACK: 'Este es el maravilloso snackbar!',
+      SPANISH_ENGLISH: 'Español - Inglés',
       TEST: 'Prueba',
       TRANSLATION: 'Traducción',
       TYPE: 'Tipo',
@@ -92,6 +99,7 @@
       VOCABULARY: 'Vocabulario',
       WORD_EXISTS: 'La palabra {{word}} ya existe en la base de datos',
       WORDS: 'Palabras',
+      WORDS_NUMBER: 'Número de palabras',
       YES: 'Si'
 
     };
