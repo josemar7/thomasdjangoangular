@@ -3,24 +3,25 @@
   <div class="col-md-8 col-md-offset-2">
     <h3 translate="TEST"></h3>
 
-    <form name="testform" id="testform" role="form" class="form-inline" >
+    <form name="testform" id="testform" role="form" >
         <div class="well">
 
-          <div class="form-group form-control-sm">
-            <label translate="MODALITY"></label>
-            <select name="modality" id="modality" ng-model="modality" ng-change="">
+          <div class="form-group">
+            <label for="modality" translate="MODALITY" ></label>
+            <select name="modality" id="modality" ng-model="test.modality" ng-change="" class="form-control">
+              <option value=""></option>
               <option translate="ENGLISH_SPANISH" value="en_es"></option>
               <option translate="SPANISH_ENGLISH" value="es_en"></option>
             </select>
           </div>
 
-          <div class="form-group form-control-sm">
-            <label translate="WORDS_NUMBER"></label>
-            <input type="number" name="input" name="words_number" id="words_number" ng-model="words_number" min="5" max="100" >
+          <div class="form-group">
+            <label for="words_number" translate="WORDS_NUMBER" ></label>
+            <input type="number" name="words_number" id="words_number" ng-model="test.words_number" min="5" max="100" >
           </div>
 
-          <div class="form-group form-control-sm">
-            <button type="button" class="btn btn-primary" ng-click="submit(modality, words_number)" translate="TEST"></button>
+          <div class="form-group">
+            <button type="button" class="btn btn-primary" ng-click="submit(test)" translate="TEST"></button>
           </div>
 
         </div>

@@ -18,7 +18,7 @@
 
         $scope.submit = submit;
 
-        function submit(modality, words_number) {
+        function submit(test) {
           if ($(testform).data('formValidation') == undefined)
             $(testform).formValidation(Validations.getValidationTests());
 
@@ -36,15 +36,11 @@
         }
 
         $scope.load = function () {
+            //$scope.test = { modality: 'en_es' };
 //            Tests.test(25).then(function (response) {
 //                $log.log('hello!!!');
 //            });
         }
-
-        $scope.$on('$viewContentLoaded', function(){
-            $(testform).formValidation(Validations.getValidationTests());
-        });
-
 
         $scope.load();
 
