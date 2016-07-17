@@ -123,6 +123,11 @@
                     validators: {
                         notEmpty: {
                             message: Utils.getMessage('REQUIRED_FIELD', { field: Utils.getMessage('WORDS_NUMBER') })
+                        },
+                        between: {
+                            min: 5,
+                            max: 100,
+                            message: Utils.getMessage('TEST_NUMBER')
                         }
                     }
                 }

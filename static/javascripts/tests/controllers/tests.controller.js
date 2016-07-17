@@ -9,12 +9,12 @@
     .module('thomas.tests.controllers')
     .controller('TestsController', TestsController);
 
-  TestsController.$inject = ['$scope', '$log', 'Tests', 'Validations'];
+  TestsController.$inject = ['$scope', 'Validations', '$state'];
 
   /**
   * @namespace TestsController
   */
-  function TestsController($scope, $log, Tests, Validations) {
+  function TestsController($scope, Validations, $state) {
 
         $scope.submit = submit;
 
@@ -31,6 +31,7 @@
 
           if (isValidForm) {
             $(testform).formValidation('destroy');
+            $state.go("testrunning", {}, {reload: true});
           }
 
         }
