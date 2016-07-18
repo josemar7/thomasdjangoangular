@@ -9,12 +9,21 @@
     .module('thomas.tests.controllers')
     .controller('TestsController', TestsController);
 
-  TestsController.$inject = ['$scope', 'Validations', '$state'];
+  TestsController.$inject = ['$scope', 'Validations', '$state', '$stateParams'];
 
   /**
   * @namespace TestsController
   */
-  function TestsController($scope, Validations, $state) {
+  function TestsController($scope, Validations, $state, $stateParams) {
+
+        $scope.test = {};
+
+        if ($stateParams.modality != undefined) {
+            $scope.test.modality = $stateParams.modality;
+        }
+        if ($stateParams.words_number != undefined) {
+            $scope.test.words_number = Number($stateParams.words_number);
+        }
 
         $scope.submit = submit;
 

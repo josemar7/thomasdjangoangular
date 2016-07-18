@@ -59,7 +59,7 @@
 //            templateUrl: '/static/templates/tests/testRunning.html'
 //        });
         .state('testrunning', {
-            url: "/testrunning",
+            url: "/testrunning/:modality/:words_number",
             views: {
 
                 // the main template will be placed here (relatively named)
