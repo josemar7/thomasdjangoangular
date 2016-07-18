@@ -19,7 +19,8 @@
     var Validations = {
       getValidationWords: getValidationWords,
       getValidationRegistration: getValidationRegistration,
-      getValidationTests: getValidationTests
+      getValidationTests: getValidationTests,
+      submit: submit
     };
 
     return Validations;
@@ -138,7 +139,23 @@
 
       }
 
+      function submit(form, validation, action) {
+          if (form.data('formValidation') == undefined)
+            form.formValidation(validation);
 
+          var isValidForm = form.data('formValidation').isValid();
+          if (isValidForm == null) {
+            form.formValidation('destroy');
+            form.formValidation(validation).formValidation('validate');
+            isValidForm = form.data('formValidation').isValid();
+          }
+
+          if (isValidForm) {
+            form.formValidation('destroy');
+            action();
+          }
+
+      }
 
   }
 })();

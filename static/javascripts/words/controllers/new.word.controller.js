@@ -25,41 +25,18 @@
     */
     function submit(word) {
 
-      if ($(wordform).data('formValidation') == undefined)
-        $(wordform).formValidation(Validations.getValidationWords());
+        Validations.submit($(wordform), Validations.getValidationWords(), function() {
+            Words.create(word).then(function(data) {
+                $scope.closeThisDialog();
+                Utils.getMessageWithSnack('CREATED_WORD', { word: data.data.name.toUpperCase()});
+                $state.go("words2", {}, {reload: true});
+            },
+            function() {
+                if (data.status == 666)
+                    Utils.getMessageWithSnack('WORD_EXISTS', { word: data.data.name.toUpperCase()});
+            });
+        });
 
-      var isValidForm = $(wordform).data('formValidation').isValid();
-      if (isValidForm == null) {
-        $(wordform).formValidation('destroy');
-        $(wordform).formValidation(Validations.getValidationWords()).formValidation('validate');
-        isValidForm = $(wordform).data('formValidation').isValid();
-      }
-
-      if (isValidForm) {
-        $(wordform).formValidation('destroy');
-        Words.create(word).then(createWordSuccessFn, createWordErrorFn);
-        //$scope.closeThisDialog();
-      }
-
-      /**
-      * @name createWordSuccessFn
-      * @desc Show snackbar with success message
-      */
-      function createWordSuccessFn(data) {
-        $scope.closeThisDialog();
-        Utils.getMessageWithSnack('CREATED_WORD', { word: data.data.name.toUpperCase()});
-        $state.go("words2", {}, {reload: true});
-      }
-
-
-      /**
-      * @name createWordErrorFn
-      * @desc Propogate error event and show snackbar with error message
-      */
-      function createWordErrorFn(data) {
-        if (data.status == 666)
-            Utils.getMessageWithSnack('WORD_EXISTS', { word: data.data.name.toUpperCase()});
-      }
     }
 
 

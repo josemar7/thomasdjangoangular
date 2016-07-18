@@ -19,21 +19,9 @@
         $scope.submit = submit;
 
         function submit(test) {
-          if ($(testform).data('formValidation') == undefined)
-            $(testform).formValidation(Validations.getValidationTests());
-
-          var isValidForm = $(testform).data('formValidation').isValid();
-          if (isValidForm == null) {
-            $(testform).formValidation('destroy');
-            $(testform).formValidation(Validations.getValidationTests()).formValidation('validate');
-            isValidForm = $(testform).data('formValidation').isValid();
-          }
-
-          if (isValidForm) {
-            $(testform).formValidation('destroy');
-            $state.go("testrunning", {}, {reload: true});
-          }
-
+            Validations.submit($(testform), Validations.getValidationTests(), function() {
+                $state.go("testrunning", {modality: $(modality).val(), words_number: $(words_number).val()}, {reload: true});
+            });
         }
 
         $scope.load = function () {

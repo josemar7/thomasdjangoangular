@@ -29,38 +29,18 @@
     */
     function submit(word) {
 
-      var isValidForm = $(wordform).data('formValidation').isValid();
-      if (isValidForm == null) {
-        $(wordform).formValidation('destroy');
-        $(wordform).formValidation(Validations.getValidationWords()).formValidation('validate');
-        isValidForm = $(wordform).data('formValidation').isValid();
-      }
+        Validations.submit($(wordform), Validations.getValidationWords(), function() {
+            word.id = id;
+            Words.update(word).then(function(data) {
+                Utils.getMessageWithSnack('UPDATED_WORD', { word: data.data.name.toUpperCase()});
+                $state.go("words2", {}, {reload: true});
+            }, function(data) {
+                $rootScope.$broadcast('word.created.error');
+                $log.log(data.error);
+            });
+            $scope.closeThisDialog();
+        });
 
-      if (isValidForm) {
-        $(wordform).formValidation('destroy');
-        word.id = id;
-        Words.update(word).then(createWordSuccessFn, createWordErrorFn);
-        $scope.closeThisDialog();
-      }
-
-      /**
-      * @name createWordSuccessFn
-      * @desc Show snackbar with success message
-      */
-      function createWordSuccessFn(data, status, headers, config) {
-        Utils.getMessageWithSnack('UPDATED_WORD', { word: data.data.name.toUpperCase()});
-        $state.go("words2", {}, {reload: true});
-      }
-
-
-      /**
-      * @name createWordErrorFn
-      * @desc Propogate error event and show snackbar with error message
-      */
-      function createWordErrorFn(data, status, headers, config) {
-        $rootScope.$broadcast('word.created.error');
-        $log.log(data.error);
-      }
     }
 
     Words.allWordType()

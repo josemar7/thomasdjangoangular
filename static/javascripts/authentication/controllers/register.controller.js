@@ -25,20 +25,9 @@
     */
     function register(user) {
 
-      if ($(regform).data('formValidation') == undefined)
-        $(regform).formValidation(Validations.getValidationRegistration());
-
-      var isValidForm = $(regform).data('formValidation').isValid();
-      if (isValidForm == null) {
-        $(regform).formValidation('destroy');
-        $(regform).formValidation(Validations.getValidationRegistration()).formValidation('validate');
-        isValidForm = $(regform).data('formValidation').isValid();
-      }
-
-      if (isValidForm) {
-        $(regform).formValidation('destroy');
-        Authentication.register(user.email, user.password, user.username);
-      }
+        Validations.submit($(regform), Validations.getValidationRegistration(), function() {
+            Authentication.register(user.email, user.password, user.username);
+        });
 
     }
 

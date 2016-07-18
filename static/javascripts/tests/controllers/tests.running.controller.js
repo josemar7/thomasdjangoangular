@@ -9,12 +9,12 @@
     .module('thomas.tests.controllers')
     .controller('TestsRunningController', TestsRunningController);
 
-  TestsRunningController.$inject = ['$scope'];
+  TestsRunningController.$inject = ['$scope', '$stateParams'];
 
   /**
   * @namespace TestsRunningController
   */
-  function TestsRunningController($scope) {
+  function TestsRunningController($scope, $stateParams) {
 
 
         $scope.load = function () {

@@ -63,8 +63,10 @@
             views: {
 
                 // the main template will be placed here (relatively named)
-                '': { templateUrl: '/static/templates/tests/test.html' },
-
+                '': {
+                    controller: 'TestsController',
+                    templateUrl: '/static/templates/tests/test.html'
+                },
                 'testView@testrunning': {
                     controller: 'TestsRunningController',
                     templateUrl: '/static/templates/tests/testRunning.html'
