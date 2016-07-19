@@ -1,3 +1,7 @@
 <form name="testRunningform" id="testform" role="form" class="form-inline">
-    <input type="text" name="word" id="word" ng-model="result" ng-style="{width: cols + 'px'}" >
+    <label ng-bind="name" ng-style="{width: cols_name + 'px'}"></label>
+    <input type="text" name="value" id="value" ng-model="value" ng-style="{width: cols_value + 'px'}" >
+    <button type="button" class="btn btn-default" aria-label="Left Align">
+      <span class="glyphicon glyphicon-chevron-right" aria-hidden="false"></span>
+    </button>
 </form>
