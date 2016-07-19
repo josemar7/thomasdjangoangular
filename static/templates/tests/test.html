@@ -15,7 +15,7 @@
 
           <div class="form-group">
             <label for="words_number" translate="WORDS_NUMBER" ></label>
-            <input type="number" name="words_number" id="words_number" ng-model="test.words_number" >
+            <input type="number" name="words_number" id="words_number" ng-model="test.words_number" ng-keypress="mykeyPress($event, test)" >
           </div>
 
           <div class="form-group">
@@ -26,9 +26,10 @@
     </form>
   </div>
 </div>
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-xs-12 ng-view" ui-view="testView"></div>
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="well" ui-view="testView">
+    </div>
   </div>
 </div>
-

@@ -25,6 +25,11 @@
             $scope.test.words_number = Number($stateParams.words_number);
         }
 
+        $scope.mykeyPress = function(keyEvent, test) {
+          if (keyEvent.which === 13)
+            submit(test);
+        }
+
         $scope.submit = submit;
 
         function submit(test) {
