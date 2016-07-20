@@ -1,6 +1,8 @@
 <form name="testRunningform" id="testform" role="form" class="form-inline">
     <label ng-bind="name" ng-style="{width: cols_name + 'px'}"></label>
     <input type="text" name="value" id="value" ng-model="result" ng-style="{width: cols_value + 'px'}" ng-keypress="mykeyPress($event)" ng-keyup="mykeyUp($event)" ng-attr-placeholder="{{'-'.repeat(value.length)}}">
+    <br>
+    <input type="text" ng-model="phonenumber" ui-mask="{{mymask}}"  ui-mask-placeholder ui-mask-placeholder-char="_"/>
     <label style="width: 75px"></label>
     <button type="button" class="btn btn-default" aria-label="Left Align">
       <span class="glyphicon glyphicon-chevron-right" aria-hidden="false"></span>

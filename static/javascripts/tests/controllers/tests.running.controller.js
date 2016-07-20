@@ -16,6 +16,8 @@
   */
   function TestsRunningController($scope, Tests, $log) {
 
+        $scope.mymask = '9999';
+
         $scope.mykeyPress = function(keyEvent) {
 //            $scope.result = '';
 //            keyEvent.currentTarget.value.split('').forEach(function(c) {
