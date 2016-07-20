@@ -34,7 +34,7 @@
 //                    $scope.result = $scope.result + c;
 //            });
 //            $log.log($scope.result);
-            $scope.result = String('-'.repeat($scope.value.length) + keyEvent.currentTarget.value).slice(-$scope.value.length);
+//            $scope.result = String('-'.repeat($scope.value.length) + keyEvent.currentTarget.value).slice(-$scope.value.length);
         }
 
         $scope.load = function (words_number, $scope) {
@@ -42,7 +42,6 @@
                 $scope.list_words = response.data;
                 $scope.current_index = 0;
                 setWordSettings($scope.test.modality, $scope.list_words[$scope.current_index]);
-                $scope.result = '-'.repeat($scope.value.length);
             });
         }
 
