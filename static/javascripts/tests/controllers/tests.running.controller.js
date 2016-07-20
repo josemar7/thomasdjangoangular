@@ -16,12 +16,33 @@
   */
   function TestsRunningController($scope, Tests, $log) {
 
+        $scope.mykeyPress = function(keyEvent) {
+//            $scope.result = '';
+//            keyEvent.currentTarget.value.split('').forEach(function(c) {
+//                if (c !== '-')
+//                    $scope.result = $scope.result + c;
+//            });
+//            $log.log($scope.result);
+        }
+
+        $scope.mykeyUp = function(keyEvent) {
+//            $scope.result = '';
+//            keyEvent.currentTarget.value.split('').forEach(function(c) {
+//                if (c === ' ')
+//                    $scope.result = $scope.result + '-';
+//                else
+//                    $scope.result = $scope.result + c;
+//            });
+//            $log.log($scope.result);
+            $scope.result = String('-'.repeat($scope.value.length) + keyEvent.currentTarget.value).slice(-$scope.value.length);
+        }
 
         $scope.load = function (words_number, $scope) {
             Tests.test(Number(words_number)).then(function (response) {
                 $scope.list_words = response.data;
                 $scope.current_index = 0;
                 setWordSettings($scope.test.modality, $scope.list_words[$scope.current_index]);
+                $scope.result = '-'.repeat($scope.value.length);
             });
         }
 

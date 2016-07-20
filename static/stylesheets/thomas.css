@@ -39,3 +39,12 @@
     -webkit-border-radius: 99px;-moz-border-radius: 99px;border-radius: 99px;
 }
 
+.glyphiconok {
+    font-size:2.5em;
+    color: green;
+}
+
+.glyphiconko {
+    font-size:2.5em;
+    color: red;
+}
