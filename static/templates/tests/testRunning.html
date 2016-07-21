@@ -1,6 +1,6 @@
 <div class="form-inline">
     <label ng-bind="name" ng-style="{width: cols_name + 'px'}"></label>
-    <input type="text" name="value" id="value" class="text-uppercase" ng-focus="myFocus($event)" ng-model="result" ng-style="{width: cols_value + 'px'}" ui-mask="{{current_mask}}"  ui-mask-placeholder ui-mask-placeholder-char="_" >
+    <input type="text" name="value" id="value" class="text-uppercase" ng-focus="myFocus($event)" ng-model="result" ng-style="{width: cols_value + 'px'}" ui-mask="{{current_mask}}"  ui-mask-placeholder ui-mask-placeholder-char="_" ui-mask-use-viewvalue="true">
     <label style="width: 75px"></label>
     <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="check()">
       <span class="glyphicon glyphicon-chevron-right" aria-hidden="false"></span>
