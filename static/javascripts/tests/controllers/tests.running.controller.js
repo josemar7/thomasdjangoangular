@@ -16,27 +16,14 @@
   */
   function TestsRunningController($scope, Tests, $log) {
 
-        $scope.mymask = '9999';
+        $scope.check = check;
 
-        $scope.mykeyPress = function(keyEvent) {
-//            $scope.result = '';
-//            keyEvent.currentTarget.value.split('').forEach(function(c) {
-//                if (c !== '-')
-//                    $scope.result = $scope.result + c;
-//            });
-//            $log.log($scope.result);
+        function check() {
+            $log.log(this.result);
         }
 
-        $scope.mykeyUp = function(keyEvent) {
-//            $scope.result = '';
-//            keyEvent.currentTarget.value.split('').forEach(function(c) {
-//                if (c === ' ')
-//                    $scope.result = $scope.result + '-';
-//                else
-//                    $scope.result = $scope.result + c;
-//            });
-//            $log.log($scope.result);
-//            $scope.result = String('-'.repeat($scope.value.length) + keyEvent.currentTarget.value).slice(-$scope.value.length);
+        $scope.myFocus = function(keyEvent) {
+            $log.log(this.current_mask);
         }
 
         $scope.load = function (words_number, $scope) {
@@ -62,6 +49,23 @@
                 $scope.cols_name =  word.translation.length * 100 / 5;
                 $scope.cols_value =  word.length * 100 / 5;
             }
+            setMask($scope.value, 1);
+        }
+
+        function setMask(value, hint_number) {
+            $scope.current_mask = '';
+            var random_index = Math.floor(Math.random() * value.length);
+            if (hint_number === 1)
+                $scope.hint1 = random_index;
+            else if (hint_number === 2)
+                $scope.hint2 = random_index;
+
+            value.split('').forEach(function(element, index, array) {
+                if (index === random_index)
+                    $scope.current_mask += value[random_index];
+                else
+                    $scope.current_mask += '*';
+            });
         }
 
   }

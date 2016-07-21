@@ -1,15 +1,13 @@
-<form name="testRunningform" id="testform" role="form" class="form-inline">
+<div class="form-inline">
     <label ng-bind="name" ng-style="{width: cols_name + 'px'}"></label>
-    <input type="text" name="value" id="value" ng-model="result" ng-style="{width: cols_value + 'px'}" ng-keypress="mykeyPress($event)" ng-keyup="mykeyUp($event)" ng-attr-placeholder="{{'-'.repeat(value.length)}}">
-    <br>
-    <input type="text" ng-model="phonenumber" ui-mask="{{mymask}}"  ui-mask-placeholder ui-mask-placeholder-char="_"/>
+    <input type="text" name="value" id="value" class="text-uppercase" ng-focus="myFocus($event)" ng-model="result" ng-style="{width: cols_value + 'px'}" ui-mask="{{current_mask}}"  ui-mask-placeholder ui-mask-placeholder-char="_" >
     <label style="width: 75px"></label>
-    <button type="button" class="btn btn-default" aria-label="Left Align">
+    <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="check()">
       <span class="glyphicon glyphicon-chevron-right" aria-hidden="false"></span>
     </button>
     <br>
-    <span class="glyphicon glyphicon-ok-circle glyphiconok" ></span>
-    <span class="glyphicon glyphicon-remove-circle glyphiconko" ></span>
-    <span class="glyphicon glyphicon-remove-circle glyphiconko" ></span>
-    <span class="glyphicon glyphicon-remove-circle glyphiconko" ></span>
-</form>
+    <span class="glyphicon glyphicon-ok-circle glyphiconok" ng-show="ok" ></span>
+    <span class="glyphicon glyphicon-remove-circle glyphiconko" ng-show="ko1" ></span>
+    <span class="glyphicon glyphicon-remove-circle glyphiconko" ng-show="ko2" ></span>
+    <span class="glyphicon glyphicon-remove-circle glyphiconko" ng-show="ko3" ></span>
+</div>
