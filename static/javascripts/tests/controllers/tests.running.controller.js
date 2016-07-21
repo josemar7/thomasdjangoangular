@@ -22,10 +22,6 @@
             $log.log(this.result);
         }
 
-        $scope.myFocus = function(keyEvent) {
-            $log.log(this.current_mask);
-        }
-
         $scope.load = function (words_number, $scope) {
             Tests.test(Number(words_number)).then(function (response) {
                 $scope.list_words = response.data;
@@ -62,9 +58,12 @@
 
             value.split('').forEach(function(element, index, array) {
                 if (index === random_index)
-                    $scope.current_mask += value[random_index];
+                    if (value[random_index].toUpperCase() === 'A')
+                        $scope.current_mask += '\\a';
+                    else
+                        $scope.current_mask += '\\' + value[random_index];
                 else
-                    $scope.current_mask += '*';
+                    $scope.current_mask += 'A';
             });
         }
 
