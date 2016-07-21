@@ -8,6 +8,22 @@
   angular
     .module('thomas.tests.controllers')
     .controller('TestsRunningController', TestsRunningController);
+//    .directive('viewValue', function(){
+//      return {
+//        priority: 10,
+//        require: 'ngModel',
+//        link: function(scope, element, attrs, controller){
+//          scope.$watch(attrs.viewValue, function(newValue, oldValue){
+//            if (newValue !== oldValue){
+//              if (controller.$viewValue !== undefined)
+//                scope[attrs.viewValue] = controller.$viewValue.toUpperCase();
+//              else
+//                scope[attrs.viewValue] = controller.$viewValue;
+//            }
+//          });
+//        }
+//      }
+//    });
 
   TestsRunningController.$inject = ['$scope', 'Tests', '$log'];
 
@@ -49,22 +65,22 @@
         }
 
         function setMask(value, hint_number) {
-            $scope.current_mask = '';
-            var random_index = Math.floor(Math.random() * value.length);
+            // to length - 1 because there's a bug in the ui-mask library
+            var random_index = Math.floor(Math.random() * (value.length - 1));
             if (hint_number === 1)
                 $scope.hint1 = random_index;
             else if (hint_number === 2)
                 $scope.hint2 = random_index;
 
+            var mask = '';
             value.split('').forEach(function(element, index, array) {
                 if (index === random_index)
-                    if (value[random_index].toUpperCase() === 'A')
-                        $scope.current_mask += '\\a';
-                    else
-                        $scope.current_mask += '\\' + value[random_index];
+                    mask += '\\' + value[random_index];
                 else
-                    $scope.current_mask += 'A';
+                    mask += 'A';
             });
+            $log.log(mask);
+            $scope.current_mask = mask;
         }
 
   }
