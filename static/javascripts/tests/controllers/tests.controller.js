@@ -39,13 +39,7 @@
         }
 
         $scope.load = function () {
-            //$scope.test = { modality: 'en_es' };
-//            Tests.test(25).then(function (response) {
-//                $log.log('hello!!!');
-//            });
         }
-
-        $scope.load();
 
   }
 

@@ -36,7 +36,37 @@
 
         function check() {
             $log.log(this.result);
+            var newString = '';
+            if (this.result !== undefined)
+                newString = this.result.insert(this.hint1, this.value[this.hint1]);
+            $log.log(newString);
+            if (newString.toUpperCase() === this.value)
+                $scope.ok = true;
+            else {
+                $scope.result = undefined;
+                if (this.ko1 === undefined) {
+                    $scope.ko1 = true;
+                    setMask(this.value, 1);
+                }
+                else if (this.ko2 === undefined) {
+                    $scope.ko2 = true;
+                    setMask(this.value, 2);
+                }
+                else if (this.ko3 === undefined) {
+                    $scope.ko3 = true;
+                    $scope.result = this.value;
+                }
+
+            }
+
         }
+
+        String.prototype.insert = function (index, string) {
+          if (index > 0)
+            return this.substring(0, index) + string + this.substring(index, this.length);
+          else
+            return string + this;
+        };
 
         $scope.load = function (words_number, $scope) {
             Tests.test(Number(words_number)).then(function (response) {
@@ -61,21 +91,40 @@
                 $scope.cols_name =  word.translation.length * 100 / 5;
                 $scope.cols_value =  word.length * 100 / 5;
             }
-            setMask($scope.value, 1);
+            //setMask($scope.value, 1);
         }
 
         function setMask(value, hint_number) {
             // to length - 1 because there's a bug in the ui-mask library
             var random_index = Math.floor(Math.random() * (value.length - 1));
-            if (hint_number === 1)
+            var hint1 = $scope.hint1;
+            var hint2 = $scope.hint2;
+            var hint3 = $scope.hint3;
+            if (hint_number === 1) {
                 $scope.hint1 = random_index;
-            else if (hint_number === 2)
+                hint1 = random_index;
+            }
+            else if (hint_number === 2) {
                 $scope.hint2 = random_index;
+                hint2 = random_index;
+            }
+            else if (hint_number === 3) {
+                $scope.hint3 = random_index;
+                hint3 = random_index;
+            }
 
             var mask = '';
             value.split('').forEach(function(element, index, array) {
-                if (index === random_index)
-                    mask += '\\' + value[random_index];
+                var i = undefined;
+                if (index === hint1 )
+                    i = hint1;
+                else if (index === hint2)
+                    i = hint2;
+                else if (index === hint3)
+                    i = hint3;
+
+                if (index === i)
+                    mask += '\\' + value[i];
                 else
                     mask += 'A';
             });

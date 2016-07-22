@@ -1,8 +1,8 @@
 <div class="form-inline">
     <label ng-bind="name" ng-style="{width: cols_name + 'px'}"></label>
-    <input type="text" name="value" id="value" class="text-uppercase" ng-model="result" ng-style="{width: cols_value + 'px'}" ui-mask="{{current_mask}}"  ui-mask-placeholder ui-mask-placeholder-char="_" >
+    <input type="text" name="value" id="value" class="text-uppercase" ng-model="result" ng-disabled="ko3" ng-style="{width: cols_value + 'px'}" ui-mask="{{current_mask}}"  ui-mask-placeholder ui-mask-placeholder-char="_" >
     <label style="width: 75px"></label>
-    <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="check()">
+    <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="check()" ng-show="!ko3">
       <span class="glyphicon glyphicon-chevron-right" aria-hidden="false"></span>
     </button>
     <br>
