@@ -8,7 +8,7 @@
     ]);
 
   angular
-    .module('thomas.tests.controllers', ['ui.mask']);
+    .module('thomas.tests.controllers', ['ui.mask', 'chart.js']);
 
   angular
     .module('thomas.tests.services', []);

@@ -7,23 +7,35 @@
 
   angular
     .module('thomas.tests.controllers')
+      .config(['ChartJsProvider', function (ChartJsProvider) {
+        // Configure all charts
+        ChartJsProvider.setOptions({
+          chartColors: ['#FE2E2E', '#31B404'],
+          responsive: false,
+          animation: {animateScale: true},
+          legend: {
+              display: true,
+              labels: {
+                  function(chart) {
+                    console.log(chart);
+                  }
+              }
+          }
+        })
+      }])
+    .directive("inputDisabled", function(){
+      return function(scope, element, attrs){
+        scope.$watch(attrs.inputDisabled, function(val){
+          if(val === undefined || !val) {
+            element.removeAttr("disabled");
+            element.focus();
+          }
+          else
+            element.attr("disabled", "disabled");
+        });
+      }
+    })
     .controller('TestsRunningController', TestsRunningController);
-//    .directive('viewValue', function(){
-//      return {
-//        priority: 10,
-//        require: 'ngModel',
-//        link: function(scope, element, attrs, controller){
-//          scope.$watch(attrs.viewValue, function(newValue, oldValue){
-//            if (newValue !== oldValue){
-//              if (controller.$viewValue !== undefined)
-//                scope[attrs.viewValue] = controller.$viewValue.toUpperCase();
-//              else
-//                scope[attrs.viewValue] = controller.$viewValue;
-//            }
-//          });
-//        }
-//      }
-//    });
 
   TestsRunningController.$inject = ['$scope', 'Tests', '$log'];
 
@@ -32,33 +44,89 @@
   */
   function TestsRunningController($scope, Tests, $log) {
 
+          $scope.labels = ['Red', 'Green'];
+          $scope.data = [500, 100];
+
+
         $scope.check = check;
 
-        function check() {
-            $log.log(this.result);
-            var newString = '';
-            if (this.result !== undefined)
-                newString = this.result.insert(this.hint1, this.value[this.hint1]);
-            $log.log(newString);
-            if (newString.toUpperCase() === this.value)
+        $scope.mykeyPress = function(keyEvent) {
+          if (keyEvent.which === 13)
+            check(this);
+        }
+
+        function check(objThis) {
+
+            if (objThis === undefined)
+                objThis = this;
+
+            if (objThis.ok || objThis.ko3) {
+                if (objThis.ok)
+                    $scope.num_ok = objThis.num_ok + 1;
+                else
+                    $scope.num_ko = objThis.num_ko + 1;
+
+                $scope.current_index = objThis.current_index + 1;
+                if ($scope.current_index === objThis.list_words.length) {
+                    return;
+                }
+                setWordSettings(objThis.test.modality, objThis.list_words[$scope.current_index]);
+                setMask($scope.value, 0);
+                return;
+            }
+
+            var newString = objThis.result;
+            if (newString !== undefined) {
+                if (objThis.hint1 !== undefined && objThis.hint2 !== undefined) {
+                    //if there is 2 hints, first process lesser and the greater
+                    if (objThis.hint1 < objThis.hint2) {
+                        //lesser
+                        newString = objThis.result.insert(objThis.hint1, objThis.value[objThis.hint1]);
+                        //greater
+                        newString = newString.insert(objThis.hint2, objThis.value[objThis.hint2]);
+                    }
+                    else if (objThis.hint1 > objThis.hint2) {
+                        //lesser
+                        newString = objThis.result.insert(objThis.hint2, objThis.value[objThis.hint2]);
+                        //greater
+                        newString = newString.insert(objThis.hint1, objThis.value[objThis.hint1]);
+                    }
+                    //same hint
+                    else {
+                        newString = objThis.result.insert(objThis.hint2, objThis.value[objThis.hint2]);
+                    }
+                }
+                //only hint1
+                else if (objThis.hint1 !== undefined) {
+                    newString = objThis.result.insert(objThis.hint1, objThis.value[objThis.hint1]);
+                }
+                //only hint2, practical impossible
+                else if (objThis.hint2 !== undefined ) {
+                    newString = objThis.result.insert(objThis.hint2, objThis.value[objThis.hint2]);
+                }
+            }
+            else
+                newString = '';
+
+            if (newString.toUpperCase() === objThis.value)
                 $scope.ok = true;
             else {
                 $scope.result = undefined;
-                if (this.ko1 === undefined) {
+                if (objThis.ko1 === undefined) {
                     $scope.ko1 = true;
-                    setMask(this.value, 1);
+                    setMask(objThis.value, 1);
                 }
-                else if (this.ko2 === undefined) {
+                else if (objThis.ko2 === undefined) {
                     $scope.ko2 = true;
-                    setMask(this.value, 2);
+                    setMask(objThis.value, 2);
                 }
-                else if (this.ko3 === undefined) {
+                else if (objThis.ko3 === undefined) {
                     $scope.ko3 = true;
-                    $scope.result = this.value;
+                    $scope.result = objThis.value;
                 }
 
             }
-
+            angular.element('#value').focus();
         }
 
         String.prototype.insert = function (index, string) {
@@ -72,13 +140,27 @@
             Tests.test(Number(words_number)).then(function (response) {
                 $scope.list_words = response.data;
                 $scope.current_index = 0;
+                $scope.num_ok = 0;
+                $scope.num_ko = 0;
                 setWordSettings($scope.test.modality, $scope.list_words[$scope.current_index]);
+                setMask($scope.value, 0);
             });
         }
 
         $scope.load($scope.$parent.test.words_number, $scope);
 
         function setWordSettings(modality, word) {
+            //initializations
+            $scope.result = undefined;
+            $scope.hint1 = undefined;
+            $scope.hint2 = undefined;
+            $scope.hint3 = undefined;
+            $scope.ok = undefined;
+            $scope.ko1 = undefined;
+            $scope.ko2 = undefined;
+            $scope.ko3 = undefined;
+            $scope.current_mask = undefined;
+
             if (modality === 'en_es') {
                 $scope.name = word.name;
                 $scope.value = word.translation;
@@ -91,7 +173,6 @@
                 $scope.cols_name =  word.translation.length * 100 / 5;
                 $scope.cols_value =  word.length * 100 / 5;
             }
-            //setMask($scope.value, 1);
         }
 
         function setMask(value, hint_number) {
@@ -99,7 +180,6 @@
             var random_index = Math.floor(Math.random() * (value.length - 1));
             var hint1 = $scope.hint1;
             var hint2 = $scope.hint2;
-            var hint3 = $scope.hint3;
             if (hint_number === 1) {
                 $scope.hint1 = random_index;
                 hint1 = random_index;
@@ -107,10 +187,6 @@
             else if (hint_number === 2) {
                 $scope.hint2 = random_index;
                 hint2 = random_index;
-            }
-            else if (hint_number === 3) {
-                $scope.hint3 = random_index;
-                hint3 = random_index;
             }
 
             var mask = '';
@@ -120,16 +196,14 @@
                     i = hint1;
                 else if (index === hint2)
                     i = hint2;
-                else if (index === hint3)
-                    i = hint3;
 
                 if (index === i)
                     mask += '\\' + value[i];
                 else
                     mask += 'A';
             });
-            $log.log(mask);
             $scope.current_mask = mask;
+
         }
 
   }
