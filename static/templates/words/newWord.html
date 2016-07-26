@@ -32,10 +32,10 @@
       <label class="col-xs-2" translate="FAVORITE"></label>
       <div class="col-xs-10" >
           <div>
-            <label><input name="favoriteYes" id="favoriteYes" name="favorite" value="true" type="radio" data-ng-model="word.favorite" ng-checked="true" >&#123;&#123;'YES' | translate&#125;&#125;</label>
+            <label><input name="favorite" ng-value="true" type="radio" ng-model="word.favorite" >&#123;&#123;'YES' | translate&#125;&#125;</label>
           </div>
           <div>
-            <label><input name="favoriteNo" id="favoriteNo" name="favorite" value="false" class="active" type="radio" data-ng-model="word.favorite">&#123;&#123;'NO' | translate&#125;&#125;</label>
+            <label><input name="favorite" ng-value="false" class="active" type="radio" ng-model="word.favorite" >&#123;&#123;'NO' | translate&#125;&#125;</label>
           </div>
       </div>
     </div>

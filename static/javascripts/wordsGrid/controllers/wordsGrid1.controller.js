@@ -99,8 +99,12 @@ WordsGrid1Controller.$inject = ['$scope', '$http', '$log', 'Words', 'Utils', 'ng
                     return 'hideField';
             }
             },
-            { name: ' ', maxWidth: 75, enableFiltering: false, enableSorting: false, enableColumnMenu: false,
-            cellTemplate: '<div><a href="javascript:void(0)" ng-click="grid.appScope.buttonUpdateClick(row.entity)" class="col-sm-1" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a><a href="javascript:void(0)" ng-click="grid.appScope.buttonDeleteClick(row.entity)" class="col-sm-1"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div>'
+            { name: ' ', maxWidth: 90, enableFiltering: false, enableSorting: false, enableColumnMenu: false,
+            cellTemplate: '<div><a href="javascript:void(0)" ng-click="grid.appScope.buttonUpdateClick(row.entity)" class="col-sm-1" ><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>' +
+                                '<a href="javascript:void(0)" ng-click="grid.appScope.buttonDeleteClick(row.entity)" class="col-sm-1"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
+                                '<a href="javascript:void(0)" ng-show="row.entity.favorite === true" ng-click="grid.appScope.buttonFavoriteClick(row.entity, !row.entity.favorite)" class="col-sm-1"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></a>' +
+                                '<a href="javascript:void(0)" ng-hide="row.entity.favorite === true" ng-click="grid.appScope.buttonFavoriteClick(row.entity, !row.entity.favorite)" class="col-sm-1"><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span></a>' +
+                                '</div>'
             }
         ];
 
@@ -114,6 +118,16 @@ WordsGrid1Controller.$inject = ['$scope', '$http', '$log', 'Words', 'Utils', 'ng
                 controller: 'UpdateWordController',
                 scope: $scope,
                 name: 'dlgUpdate'
+            });
+        };
+
+        $scope.buttonFavoriteClick = function (word, value) {
+            word.favorite = value;
+            var wordTypeId = word.wordType;
+            word.wordType = {id: wordTypeId};
+            Words.update(word).then(function(data) {
+            }, function(data) {
+                $log.log(data.error);
             });
         };
 
