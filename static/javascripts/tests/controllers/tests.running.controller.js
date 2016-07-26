@@ -37,16 +37,12 @@
     })
     .controller('TestsRunningController', TestsRunningController);
 
-  TestsRunningController.$inject = ['$scope', 'Tests', '$log'];
+  TestsRunningController.$inject = ['$scope', 'Tests', '$log', 'Utils'];
 
   /**
   * @namespace TestsRunningController
   */
-  function TestsRunningController($scope, Tests, $log) {
-
-          $scope.labels = ['Red', 'Green'];
-          $scope.data = [500, 100];
-
+  function TestsRunningController($scope, Tests, $log, Utils) {
 
         $scope.check = check;
 
@@ -68,6 +64,9 @@
 
                 $scope.current_index = objThis.current_index + 1;
                 if ($scope.current_index === objThis.list_words.length) {
+                    $scope.labels = [Utils.getMessage('ERRORS', { errors: $scope.num_ko }),
+                                    Utils.getMessage('SUCCESSES', { successes: $scope.num_ok })];
+                    $scope.data = [$scope.num_ko, $scope.num_ok];
                     return;
                 }
                 setWordSettings(objThis.test.modality, objThis.list_words[$scope.current_index]);
@@ -144,6 +143,7 @@
                 $scope.num_ko = 0;
                 setWordSettings($scope.test.modality, $scope.list_words[$scope.current_index]);
                 setMask($scope.value, 0);
+                angular.element('#value').focus();
             });
         }
 

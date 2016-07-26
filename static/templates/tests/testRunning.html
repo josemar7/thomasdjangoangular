@@ -1,4 +1,4 @@
-<div class="form-inline">
+<div class="form-inline" ng-hide="current_index === list_words.length">
     <label translate="CURRENT_WORD" translate-values="{ current: current_index + 1, total: list_words.length }"></label>
     <br><br>
     <label ng-bind="name" ng-style="{width: cols_name + 'px'}"></label>
@@ -10,7 +10,7 @@
            ui-mask-placeholder ui-mask-placeholder-char="_" >
 
     <label style="width: 75px"></label>
-    <button type="button" class="btn btn-default" aria-label="Left Align" ng-click="check()" >
+    <button type="button" class="btn btn-default" aria-label="Left Align" ng-hide="current_index === list_words.length" ng-click="check()" >
         <span class="glyphicon glyphicon-chevron-right" aria-hidden="false"></span>
     </button>
     <br>
@@ -19,5 +19,4 @@
     <span class="glyphicon glyphicon-remove-circle glyphiconko" ng-show="ko2" ></span>
     <span class="glyphicon glyphicon-remove-circle glyphiconko" ng-show="ko3" ></span>
 </div>
-<br><br>
 <div ng-include="'/static/templates/tests/testResult.html'" ng-show="current_index === list_words.length"/>
