@@ -51,6 +51,12 @@
             check(this);
         }
 
+        $scope.maskOptions = {
+            maskDefinitions : {
+                '9': /\d/, 'A': /[a-zA-Z ñÑ]/, '*': /[a-zA-Z0-9]/
+            }
+        };
+
         function check(objThis) {
 
             if (objThis === undefined)
@@ -107,8 +113,10 @@
             else
                 newString = '';
 
-            if (newString.toUpperCase() === objThis.value)
+            if (newString.toUpperCase() === objThis.value) {
                 $scope.ok = true;
+                angular.element('#next').focus();
+            }
             else {
                 $scope.result = undefined;
                 if (objThis.ko1 === undefined) {
@@ -122,10 +130,13 @@
                 else if (objThis.ko3 === undefined) {
                     $scope.ko3 = true;
                     $scope.result = objThis.value;
+                    setTimeout(function(){ angular.element('#next').focus(); }, 0);
+//                    angular.element('#next').focus();
                 }
 
             }
-            angular.element('#value').focus();
+            if (($scope.ko3 === undefined || !$scope.ko3) && ($scope.ok === undefined || !$scope.ok))
+                angular.element('#value').focus();
         }
 
         String.prototype.insert = function (index, string) {
