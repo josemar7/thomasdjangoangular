@@ -7,7 +7,6 @@
       NAMESPACE: {
         PARAGRAPH: 'And it comes with awesome features!'
       },
-      LOGO: 'Logo',
       HOME: 'Home',
       REGISTER: 'Register',
       LOGIN: 'Login',
@@ -28,6 +27,7 @@
       ERRORS: 'Errors : {{errors}}',
       FAVORITE: 'Favorite',
       HIDDEN_COLUMN: 'Hidden column',
+      LOGO: 'Carla Thomas',
       MODALITY: 'Modality',
       NAME: 'Name',
       NEW: 'New',
@@ -63,7 +63,6 @@
       NAMESPACE: {
         PARAGRAPH: 'Viene con características maravillosas!'
       },
-      LOGO: 'Logotipo',
       HOME: 'Casa',
       REGISTER: 'Registrarse',
       LOGIN: 'Conexión',
@@ -84,6 +83,7 @@
       ERRORS: 'Errores : {{errors}}',
       FAVORITE: 'Favorita',
       HIDDEN_COLUMN: 'Ocultar columna',
+      LOGO: 'Carla Thomas',
       MODALITY: 'Modalidad',
       NAME: 'Nombre',
       NEW: 'Nuevo',
