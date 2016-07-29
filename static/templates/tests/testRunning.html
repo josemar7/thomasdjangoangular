@@ -9,6 +9,13 @@
            ui-mask="{{current_mask}}"
            ui-options="maskOptions"
            ui-mask-placeholder ui-mask-placeholder-char="_" >
+    <label style="width: 20px"></label>
+    <a href="javascript:void(0)" ng-click="buttonFavoriteClick(true)" ng-hide="word.favorite === true">
+        <span class="glyphicon glyphicon-star-empty glyphiconfavorite" ></span>
+    </a>
+    <a href="javascript:void(0)" ng-click="buttonFavoriteClick(false)" ng-show="word.favorite === true">
+        <span class="glyphicon glyphicon-star glyphiconfavorite" ></span>
+    </a>
 
     <label style="width: 75px"></label>
     <button type="button" name="next" id="next" class="btn btn-default" aria-label="Left Align" ng-hide="current_index === list_words.length" ng-click="check()" >

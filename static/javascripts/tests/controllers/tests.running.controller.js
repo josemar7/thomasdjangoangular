@@ -28,7 +28,7 @@
         scope.$watch(attrs.inputDisabled, function(val){
           if(val === undefined || !val) {
             element.removeAttr("disabled");
-            element.focus();
+            setTimeout(function(){ element.focus(); }, 0);
           }
           else
             element.attr("disabled", "disabled");
@@ -37,12 +37,12 @@
     })
     .controller('TestsRunningController', TestsRunningController);
 
-  TestsRunningController.$inject = ['$scope', 'Tests', '$log', 'Utils'];
+  TestsRunningController.$inject = ['$scope', 'Tests', '$log', 'Utils', 'Words'];
 
   /**
   * @namespace TestsRunningController
   */
-  function TestsRunningController($scope, Tests, $log, Utils) {
+  function TestsRunningController($scope, Tests, $log, Utils, Words) {
 
         $scope.check = check;
 
@@ -50,6 +50,17 @@
           if (keyEvent.which === 13)
             check(this);
         }
+
+        $scope.buttonFavoriteClick = function (value) {
+            this.word.favorite = value;
+            var wordTypeId = this.word.wordType;
+            this.word.wordType = {id: wordTypeId};
+
+            Words.update(this.word).then(function(data) {
+            }, function(data) {
+                $log.log(data.error);
+            });
+        };
 
         $scope.maskOptions = {
             maskDefinitions : {
@@ -131,7 +142,6 @@
                     $scope.ko3 = true;
                     $scope.result = objThis.value;
                     setTimeout(function(){ angular.element('#next').focus(); }, 0);
-//                    angular.element('#next').focus();
                 }
 
             }
@@ -184,6 +194,7 @@
                 $scope.cols_name =  word.translation.length * 100 / 5;
                 $scope.cols_value =  word.length * 100 / 5;
             }
+            $scope.word = word;
         }
 
         function setMask(value, hint_number) {
