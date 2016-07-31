@@ -177,6 +177,9 @@ WordsGrid1Controller.$inject = ['$scope', '$http', '$log', 'Words', 'Utils', 'ng
                     }
                 });
 
+                $scope.pagination.offset = undefined;
+                $scope.pagination.totalItems = null;
+
                 $scope.load();
             });
 
