@@ -9,12 +9,12 @@
     .module('thomas.layout.controllers')
     .controller('NavbarController', NavbarController);
 
-  NavbarController.$inject = ['$scope', 'Authentication'];
+  NavbarController.$inject = ['$scope', 'Authentication', '$log'];
 
   /**
   * @namespace NavbarController
   */
-  function NavbarController($scope, Authentication) {
+  function NavbarController($scope, Authentication, $log) {
     var vm = this;
 
     vm.logout = logout;
@@ -25,7 +25,11 @@
     * @memberOf thomas.layout.controllers.NavbarController
     */
     function logout() {
-      Authentication.logout();
+      Authentication.current().then(function(response) {
+            $log.log(response);
+            Authentication.logout();
+      });
+
     }
   }
 })();

@@ -9,13 +9,13 @@
     .module('thomas.authentication.services')
     .factory('Authentication', Authentication);
 
-  Authentication.$inject = ['$cookies', '$http'];
+  Authentication.$inject = ['$http'];
 
   /**
   * @namespace Authentication
   * @returns {Factory}
   */
-  function Authentication($cookies, $http) {
+  function Authentication($http) {
     /**
     * @name Authentication
     * @desc The Factory to be returned
@@ -25,6 +25,7 @@
       isAuthenticated: isAuthenticated,
       login: login,
       logout: logout,
+      current: current,
       register: register,
       //setAuthenticatedAccount: setAuthenticatedAccount,
       unauthenticate: unauthenticate
@@ -91,7 +92,8 @@
        * @memberOf thinkster.authentication.services.Authentication
        */
       function isAuthenticated() {
-        return !!$cookies.authenticatedAccount;
+//        return !!$cookies.authenticatedAccount;
+        return;
       }
 
       /**
@@ -155,6 +157,17 @@
           }
         }
 
+        function current() {
+
+            return $http.get('/api/v1/auth/current/')
+              .then(function(response) {
+                    return response.data;
+              });
+
+          //return $http.get('/api/v1/wordsType/');
+        }
+
+
       /**
        * @name setAuthenticatedAccount
        * @desc Stringify the account object and store it in a cookie
@@ -175,7 +188,7 @@
        * @memberOf thinkster.authentication.services.Authentication
        */
       function unauthenticate() {
-        delete $cookies.authenticatedAccount;
+//        delete $cookies.authenticatedAccount;
       }
 
 

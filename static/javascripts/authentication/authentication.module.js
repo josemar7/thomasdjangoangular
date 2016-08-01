@@ -11,5 +11,5 @@
     .module('thomas.authentication.controllers', []);
 
   angular
-    .module('thomas.authentication.services', ['ngCookies']);
+    .module('thomas.authentication.services', []);
 })();
