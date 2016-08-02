@@ -10,13 +10,13 @@
     .controller('ProfileSettingsController', ProfileSettingsController);
 
   ProfileSettingsController.$inject = [
-    '$scope', '$location', '$stateParams', 'Authentication', 'Profile', 'Utils'
+    '$scope', '$location', '$stateParams', 'Authentication', 'Profile', 'Utils', 'Validations'
   ];
 
   /**
   * @namespace ProfileSettingsController
   */
-  function ProfileSettingsController($scope, $location, $stateParams, Authentication, Profile, Utils) {
+  function ProfileSettingsController($scope, $location, $stateParams, Authentication, Profile, Utils, Validations) {
 
     $scope.destroy = destroy;
     $scope.update = update;
@@ -103,24 +103,28 @@
     * @memberOf thomas.profiles.controllers.ProfileSettingsController
     */
     function update() {
-      Profile.update($scope.profile).then(profileSuccessFn, profileErrorFn);
 
-      /**
-      * @name profileSuccessFn
-      * @desc Show success snackbar
-      */
-      function profileSuccessFn(data, status, headers, config) {
-        Utils.getMessageWithSnack('PROFILE_UPDATED');
-      }
+        Validations.submit($(settingsform), Validations.getValidationProfile(), function() {
+              Profile.update($scope.profile).then(profileSuccessFn, profileErrorFn);
 
+              /**
+              * @name profileSuccessFn
+              * @desc Show success snackbar
+              */
+              function profileSuccessFn(data, status, headers, config) {
+                Utils.getMessageWithSnack('PROFILE_UPDATED');
+              }
 
-      /**
-      * @name profileErrorFn
-      * @desc Show error snackbar
-      */
-      function profileErrorFn(data, status, headers, config) {
-//        Snackbar.error(data.error);
-      }
+              /**
+              * @name profileErrorFn
+              * @desc Show error snackbar
+              */
+              function profileErrorFn(data, status, headers, config) {
+        //        Snackbar.error(data.error);
+              }
+
+        });
+
     }
   }
 })();

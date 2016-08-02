@@ -20,6 +20,7 @@
       getValidationWords: getValidationWords,
       getValidationRegistration: getValidationRegistration,
       getValidationTests: getValidationTests,
+      getValidationProfile: getValidationProfile,
       submit: submit
     };
 
@@ -139,6 +140,62 @@
 
       }
 
+      function getValidationProfile() {
+
+        var validateOptions =
+        {
+            framework: 'bootstrap',
+            icon: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                email: {
+                    validators: {
+                        notEmpty: {
+                            message: Utils.getMessage('REQUIRED_FIELD', { field: Utils.getMessage('EMAIL') })
+                        },
+                        emailAddress: {
+                            message: Utils.getMessage('EMAIL_ERROR')
+                        }
+                    }
+                },
+                password: {
+                    validators: {
+                        notEmpty: {
+                            message: Utils.getMessage('REQUIRED_FIELD', { field: Utils.getMessage('PASSWORD') })
+                        },
+                        identical: {
+                            field: 'confirmPassword',
+                            message: Utils.getMessage('PASSWORD_CONFIRM_ERROR')
+                        }
+                    }
+                },
+                confirm_password: {
+                    validators: {
+                        notEmpty: {
+                            message: Utils.getMessage('REQUIRED_FIELD', { field: Utils.getMessage('CONFIRM_PASSWORD') })
+                        },
+                        identical: {
+                            field: 'password',
+                            message: Utils.getMessage('PASSWORD_CONFIRM_ERROR')
+                        }
+                    }
+                },
+                username: {
+                    validators: {
+                        notEmpty: {
+                            message: Utils.getMessage('REQUIRED_FIELD', { field: Utils.getMessage('USERNAME') })
+                        }
+                    }
+                }
+            }
+        };
+        return validateOptions;
+
+      }
+
       function submit(form, validation, action) {
           if (form.data('formValidation') == undefined)
             form.formValidation(validation);
@@ -154,6 +211,10 @@
             form.formValidation('destroy');
             action();
           }
+          else
+            if (form.data('formValidation').$invalidFields !== undefined &&
+                form.data('formValidation').$invalidFields.length > 0)
+                    form.data('formValidation').$invalidFields[0].focus();
 
       }
 

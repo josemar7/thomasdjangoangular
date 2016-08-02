@@ -18,6 +18,16 @@ class AccountManager(BaseUserManager):
 
         return account
 
+    def update_user(self, id, email, username, password, tagline):
+
+        account = self.model(
+            id=id, email=self.normalize_email(email), username=username, tagline=tagline
+        )
+        account.set_password(password)
+        account.save()
+
+        return account
+
     def create_superuser(self, email, password, **kwargs):
         account = self.create_user(email, password, **kwargs)
 
