@@ -13,7 +13,8 @@
       'thomas.utils',
       'thomas.validations',
       'thomas.forms',
-      'thomas.tests'
+      'thomas.tests',
+      'thomas.profiles',
     ])
     .run(run);
 

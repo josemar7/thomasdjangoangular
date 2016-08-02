@@ -9,13 +9,16 @@
     .module('thomas.authentication.services')
     .factory('Authentication', Authentication);
 
-  Authentication.$inject = ['$http'];
+  Authentication.$inject = ['$http', '$q'];
 
   /**
   * @namespace Authentication
   * @returns {Factory}
   */
-  function Authentication($http) {
+  function Authentication($http, $q) {
+
+    var deferred = $q.defer();
+
     /**
     * @name Authentication
     * @desc The Factory to be returned
@@ -161,10 +164,15 @@
 
             return $http.get('/api/v1/auth/current/')
               .then(function(response) {
-                    return response.data;
+                // promise is fulfilled
+                deferred.resolve(response.data);
+                return deferred.promise;
+              }, function(response) {
+                // the following line rejects the promise
+                deferred.reject(response);
+                return deferred.promise;
               });
 
-          //return $http.get('/api/v1/wordsType/');
         }
 
 

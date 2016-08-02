@@ -53,11 +53,6 @@
             controller: 'TestsController',
             templateUrl: '/static/templates/tests/test.html'
         })
-//        .state('testrunning', {
-//            url: "/testrunning",
-//            controller: 'TestsRunningController',
-//            templateUrl: '/static/templates/tests/testRunning.html'
-//        });
         .state('testrunning', {
             url: "/testrunning/:modality/:words_number",
             views: {
@@ -73,6 +68,11 @@
                 }
             }
 
+        })
+        .state('settings', {
+            url: "/+:username/settings",
+            controller: 'ProfileSettingsController',
+            templateUrl: '/static/templates/profiles/settings.html'
         });
 
   }

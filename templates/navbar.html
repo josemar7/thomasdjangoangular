@@ -16,7 +16,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         {% if user.is_authenticated %}
-          <li><a href="/+{{ user.username }}">+{{ user.username }}</a></li>
+          <li><a href="/+{{ user.username }}/settings">+{{ user.username }}</a></li>
           <li><a href="/words2" translate="WORDS"></a></li>
           <li><a href="/test" translate="TEST"></a></li>
           <li><a href="javascript:void(0)" ng-click="vm.logout()" ><span class="glyphicon glyphicon-log-out"></span> &#123;&#123;'LOGOUT' | translate&#125;&#125;</a></li>
