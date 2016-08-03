@@ -17,7 +17,6 @@
   */
   function Words($http, $q) {
 
-    var deferred = $q.defer();
     var anonymousToken = {
         'AnonymousToken': '78020290-5df3-44b8-9bdb-7b3b4fea2f25'
     };
@@ -38,6 +37,7 @@
     ////////////////////
 
     function allWordType() {
+        var deferred = $q.defer();
 
         return $http.get('/api/v1/wordsType/')
           .then(function(response) {
@@ -60,6 +60,8 @@
     * @memberOf thomas.words.services.Words
     */
     function all() {
+        var deferred = $q.defer();
+
       //return $http.get('/api/v1/words/');
         return $http.get('/api/v1/words/')
           .then(function(response) {
