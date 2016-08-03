@@ -18,10 +18,10 @@ class AccountManager(BaseUserManager):
 
         return account
 
-    def update_user(self, id, email, username, password, tagline):
+    def update_user(self, id, password, email, username, tagline, last_name, first_name, created_at, **kwargs):
 
         account = self.model(
-            id=id, email=self.normalize_email(email), username=username, tagline=tagline
+            id=id, email=self.normalize_email(email), username=username, tagline=tagline, created_at=created_at
         )
         account.set_password(password)
         account.save()

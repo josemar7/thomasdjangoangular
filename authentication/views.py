@@ -43,7 +43,9 @@ class AccountViewSet(viewsets.ModelViewSet):
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         if serializer.is_valid():
-            Account.objects.create_user(**serializer.validated_data)
+            serializer.validated_data['id'] = request.data['id']
+            serializer.validated_data['created_at'] = request.data['created_at']
+            Account.objects.update_user(**serializer.validated_data)
 
             return Response(serializer.validated_data, status=status.HTTP_201_CREATED)
 
@@ -51,7 +53,6 @@ class AccountViewSet(viewsets.ModelViewSet):
             'status': 'Bad request',
             'message': 'Account could not be created with received data.'
         }, status=status.HTTP_400_BAD_REQUEST)
-
 
 class LoginView(views.APIView):
     def post(self, request, format=None):
@@ -78,6 +79,18 @@ class LoginView(views.APIView):
                 'status': 'Unauthorized',
                 'message': 'Username/password combination invalid.'
             }, status=status.HTTP_401_UNAUTHORIZED)
+
+class CheckView(views.APIView):
+
+    def post(self, request, format=None):
+        data = json.loads(request.body.decode())
+        email = data.get('email', None)
+        password = data.get('password', None)
+        account = authenticate(email=email, password=password)
+        if account is not None:
+            return Response(True)
+        else:
+            return Response(False)
 
 class LogoutView(views.APIView):
     permission_classes = (permissions.IsAuthenticated,)

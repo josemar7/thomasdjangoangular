@@ -67,35 +67,34 @@
             });
     }
 
-
     /**
     * @name destroy
     * @desc Destroy this user's profile
     * @memberOf thomas.profiles.controllers.ProfileSettingsController
     */
     function destroy() {
-      Profile.destroy($scope.profile.username).then(profileSuccessFn, profileErrorFn);
 
-      /**
-      * @name profileSuccessFn
-      * @desc Redirect to index and display success snackbar
-      */
-      function profileSuccessFn(data, status, headers, config) {
-        Authentication.unauthenticate();
-        window.location = '/';
-        Utils.getMessageWithSnack('ACCOUNT_DELETED');
-      }
+        Validations.submit($(settingsform), Validations.getValidationProfile(), function() {
 
+              Profile.destroy($scope.profile.username).then(profileSuccessFn, profileErrorFn);
 
-      /**
-      * @name profileErrorFn
-      * @desc Display error snackbar
-      */
-      function profileErrorFn(data, status, headers, config) {
-//        Snackbar.error(data.error);
-      }
+              /**
+              * @name profileSuccessFn
+              * @desc Redirect to index and display success snackbar
+              */
+              function profileSuccessFn(data, status, headers, config) {
+                window.location = '/';
+                Utils.getMessageWithSnack('ACCOUNT_DELETED');
+              }
+
+              /**
+              * @name profileErrorFn
+              * @desc Display error snackbar
+              */
+              function profileErrorFn(data, status, headers, config) {
+              }
+        });
     }
-
 
     /**
     * @name update
@@ -112,6 +111,7 @@
               * @desc Show success snackbar
               */
               function profileSuccessFn(data, status, headers, config) {
+                 Authentication.login(data.data.email, data.data.password);
                 Utils.getMessageWithSnack('PROFILE_UPDATED');
               }
 
@@ -120,7 +120,6 @@
               * @desc Show error snackbar
               */
               function profileErrorFn(data, status, headers, config) {
-        //        Snackbar.error(data.error);
               }
 
         });

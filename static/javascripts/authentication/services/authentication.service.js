@@ -24,14 +24,11 @@
     * @desc The Factory to be returned
     */
     var Authentication = {
-      //getAuthenticatedAccount: getAuthenticatedAccount,
-      isAuthenticated: isAuthenticated,
       login: login,
       logout: logout,
       current: current,
       register: register,
-      //setAuthenticatedAccount: setAuthenticatedAccount,
-      unauthenticate: unauthenticate
+      checklogin: checklogin
     };
 
     return Authentication;
@@ -89,17 +86,6 @@
       */
 
       /**
-       * @name isAuthenticated
-       * @desc Check if the current user is authenticated
-       * @returns {boolean} True is user is authenticated, else false.
-       * @memberOf thinkster.authentication.services.Authentication
-       */
-      function isAuthenticated() {
-//        return !!$cookies.authenticatedAccount;
-        return;
-      }
-
-      /**
        * @name login
        * @desc Try to log in with email `email` and password `password`
        * @param {string} email The email entered by the user
@@ -146,8 +132,6 @@
            * @desc Unauthenticate and redirect to index with page reload
            */
           function logoutSuccessFn(data, status, headers, config) {
-            Authentication.unauthenticate();
-
             window.location = '/';
           }
 
@@ -175,6 +159,21 @@
 
         }
 
+        function checklogin() {
+
+            return $http.get('/api/v1/auth/check/')
+              .then(function(response) {
+                // promise is fulfilled
+                deferred.resolve(response.data);
+                return deferred.promise;
+              }, function(response) {
+                // the following line rejects the promise
+                deferred.reject(response);
+                return deferred.promise;
+              });
+
+        }
+
 
       /**
        * @name setAuthenticatedAccount
@@ -188,18 +187,6 @@
         $cookies.authenticatedAccount = JSON.stringify(account);
       }
       */
-
-      /**
-       * @name unauthenticate
-       * @desc Delete the cookie where the user object is stored
-       * @returns {undefined}
-       * @memberOf thinkster.authentication.services.Authentication
-       */
-      function unauthenticate() {
-//        delete $cookies.authenticatedAccount;
-      }
-
-
 
   }
 })();
