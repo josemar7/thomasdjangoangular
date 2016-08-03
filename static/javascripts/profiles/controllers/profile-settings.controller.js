@@ -76,23 +76,17 @@
 
         Validations.submit($(settingsform), Validations.getValidationProfile(), function() {
 
-              Profile.destroy($scope.profile.username).then(profileSuccessFn, profileErrorFn);
+              Authentication.checklogin($scope.profile.email, $scope.profile.password).then(function(response) {
+                  Profile.destroy($scope.profile.username).then(function() {
+                    Utils.getMessageWithSnack('ACCOUNT_DELETED');
+                    setTimeout(function(){ window.location = '/'; }, 3000);
+                  }, function() {
+                  });
 
-              /**
-              * @name profileSuccessFn
-              * @desc Redirect to index and display success snackbar
-              */
-              function profileSuccessFn(data, status, headers, config) {
-                window.location = '/';
-                Utils.getMessageWithSnack('ACCOUNT_DELETED');
-              }
+              }, function(response) {
+                Utils.getMessageWithSnack('ACCOUNT_CAN_NOT_DELETE');
+              });
 
-              /**
-              * @name profileErrorFn
-              * @desc Display error snackbar
-              */
-              function profileErrorFn(data, status, headers, config) {
-              }
         });
     }
 

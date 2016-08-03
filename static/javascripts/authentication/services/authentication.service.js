@@ -17,8 +17,6 @@
   */
   function Authentication($http, $q) {
 
-    var deferred = $q.defer();
-
     /**
     * @name Authentication
     * @desc The Factory to be returned
@@ -68,22 +66,6 @@
       }
 
     }
-
-      /**
-       * @name getAuthenticatedAccount
-       * @desc Return the currently authenticated account
-       * @returns {object|undefined} Account if authenticated, else `undefined`
-       * @memberOf thinkster.authentication.services.Authentication
-       */
-       /*
-      function getAuthenticatedAccount() {
-        if (!$cookies.authenticatedAccount) {
-          return;
-        }
-
-        return JSON.parse($cookies.authenticatedAccount);
-      }
-      */
 
       /**
        * @name login
@@ -145,6 +127,7 @@
         }
 
         function current() {
+            var deferred = $q.defer();
 
             return $http.get('/api/v1/auth/current/')
               .then(function(response) {
@@ -159,12 +142,15 @@
 
         }
 
-        function checklogin() {
+        function checklogin(email, password) {
 
-            return $http.get('/api/v1/auth/check/')
-              .then(function(response) {
+            var deferred = $q.defer();
+
+            return $http.post('/api/v1/auth/check/', {
+                email: email, password: password
+            }).then(function(response) {
                 // promise is fulfilled
-                deferred.resolve(response.data);
+                deferred.resolve(response.status);
                 return deferred.promise;
               }, function(response) {
                 // the following line rejects the promise

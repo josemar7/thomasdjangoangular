@@ -83,14 +83,18 @@ class LoginView(views.APIView):
 class CheckView(views.APIView):
 
     def post(self, request, format=None):
-        data = json.loads(request.body.decode())
-        email = data.get('email', None)
-        password = data.get('password', None)
+        email = request.data['email']
+        password = request.data['password']
         account = authenticate(email=email, password=password)
+
         if account is not None:
-            return Response(True)
+            serialized = AccountSerializer(account)
+            return Response(serialized.data)
         else:
-            return Response(False)
+            return Response({
+                'status': 'Unauthorized',
+                'message': 'This account has been disabled.'
+            }, status=status.HTTP_401_UNAUTHORIZED)
 
 class LogoutView(views.APIView):
     permission_classes = (permissions.IsAuthenticated,)
