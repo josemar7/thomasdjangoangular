@@ -37,12 +37,13 @@
     * @returns {Promise}
     * @memberOf thomas.tests.services.Tests
     */
-    function test(num_questions) {
+    function test(num_questions, favorite) {
         return $http({
             method: 'GET',
             url: '/api/v1/tests/',
             params: {
-                num_questions: num_questions
+                num_questions: num_questions,
+                favorite: favorite
             }
         }).then(function (response) {
             return response;

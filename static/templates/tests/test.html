@@ -18,6 +18,15 @@
             <input type="number" name="words_number" id="words_number" ng-model="test.words_number" ng-keypress="mykeyPress($event, test)" >
           </div>
 
+        <div class="form-group">
+          <label translate="FAVORITE"></label>
+          <select name="favorite" id="favorite" ng-model="test.favorite" >
+            <option value=""></option>
+            <option translate="YES" value="True"></option>
+            <option translate="NO" value="False"></option>
+          </select>
+        </div>
+
           <div class="form-group">
             <button type="button" class="btn btn-primary" ng-click="submit(test)" translate="TEST"></button>
           </div>

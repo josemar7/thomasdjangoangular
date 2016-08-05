@@ -25,6 +25,10 @@
             $scope.test.words_number = Number($stateParams.words_number);
         }
 
+        if ($stateParams.favorite != undefined) {
+            $scope.test.favorite = $stateParams.favorite;
+        }
+
         $scope.mykeyPress = function(keyEvent, test) {
           if (keyEvent.which === 13)
             submit(test);
@@ -34,7 +38,7 @@
 
         function submit(test) {
             Validations.submit($(testform), Validations.getValidationTests(), function() {
-                $state.go("testrunning", {modality: $(modality).val(), words_number: $(words_number).val()}, {reload: true});
+                $state.go("testrunning", {modality: $(modality).val(), words_number: $(words_number).val(), favorite: $(favorite).val()}, {reload: true});
             });
         }
 

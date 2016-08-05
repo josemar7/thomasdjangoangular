@@ -77,7 +77,7 @@
     }
 
     function readAll(limit, offset, sort, filter) {
-        var name, translation, ordering = '';
+        var name, translation, favorite, ordering = '';
         if (sort != undefined) {
             sort.forEach(function(currentValue,index,arr) {
                 if (currentValue.order == 'desc')
@@ -95,6 +95,8 @@
                     name = currentValue.value;
                 else if (currentValue.fieldName == 'translation')
                     translation = currentValue.value;
+                else if (currentValue.fieldName == 'favorite')
+                    favorite = currentValue.value;
             });
         }
         return $http({
@@ -105,7 +107,8 @@
                 offset: offset,
                 ordering: ordering,
                 name: name,
-                translation: translation
+                translation: translation,
+                favorite: favorite
             },
             headers: anonymousToken
         }).then(function (response) {

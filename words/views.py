@@ -12,9 +12,15 @@ from words.serializers import WordSerializer, WordTypeSerializer
 class WordFilter(FilterSet):
     name = django_filters.CharFilter(name="name", lookup_type='startswith')
     translation = django_filters.CharFilter(name="translation", lookup_type='startswith')
+    favorite = django_filters.BooleanFilter(name='favorite')
     class Meta:
         model = Word
-        fields = ['name', 'translation']
+        fields = ['name', 'translation', 'favorite']
+
+    # favorite = django_filters.BooleanFilter(name='favorite')
+    # class Meta:
+    #     model = Word
+    #     fields = ['favorite']
 
 
 class WordViewSet(viewsets.ModelViewSet, DatabaseQueryLoggerMixin):
@@ -23,7 +29,7 @@ class WordViewSet(viewsets.ModelViewSet, DatabaseQueryLoggerMixin):
     pagination_class = LimitOffsetPagination
     filter_backends = (DjangoFilterBackend, OrderingFilter,)
     filter_class = WordFilter
-    ordering_fields = ('name', 'translation')
+    ordering_fields = ('name', 'translation', 'favorite')
 
     def get_permissions(self):
         if self.request.method in permissions.SAFE_METHODS:

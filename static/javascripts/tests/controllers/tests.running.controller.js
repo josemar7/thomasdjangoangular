@@ -156,19 +156,19 @@
             return string + this;
         };
 
-        $scope.load = function (words_number, $scope) {
-            Tests.test(Number(words_number)).then(function (response) {
+        $scope.load = function (words_number, favorite, $scope) {
+            Tests.test(Number(words_number), favorite).then(function (response) {
                 $scope.list_words = response.data;
                 $scope.current_index = 0;
                 $scope.num_ok = 0;
                 $scope.num_ko = 0;
                 setWordSettings($scope.test.modality, $scope.list_words[$scope.current_index]);
                 setMask($scope.value, 0);
-                angular.element('#value').focus();
+                setTimeout(function(){ angular.element('#value').focus(); }, 0);
             });
         }
 
-        $scope.load($scope.$parent.test.words_number, $scope);
+        $scope.load($scope.$parent.test.words_number, $scope.$parent.test.favorite ,$scope);
 
         function setWordSettings(modality, word) {
             //initializations

@@ -3,7 +3,7 @@
   <div class="col-md-8 col-md-offset-2">
     <h3 translate="VOCABULARY"></h3>
 
-    <div class="well">
+    <div class="well form-inline">
 
       <div class="form-group">
         <label translate="HIDDEN_COLUMN"></label>
@@ -11,6 +11,15 @@
           <option value=""></option>
           <option translate="NAME" value="name"></option>
           <option translate="TRANSLATION" value="translation"></option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label translate="FAVORITE"></label>
+        <select name="favorite" id="favorite" ng-model="favorite" ng-change="refresh()">
+          <option value=""></option>
+          <option translate="YES" value="True"></option>
+          <option translate="NO" value="False"></option>
         </select>
       </div>
 

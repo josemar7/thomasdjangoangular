@@ -54,7 +54,7 @@
             templateUrl: '/static/templates/tests/test.html'
         })
         .state('testrunning', {
-            url: "/testrunning/:modality/:words_number",
+            url: "/testrunning/:modality/:words_number/:favorite",
             views: {
 
                 // the main template will be placed here (relatively named)

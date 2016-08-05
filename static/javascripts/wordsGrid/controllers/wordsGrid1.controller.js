@@ -22,6 +22,18 @@ WordsGrid1Controller.$inject = ['$scope', '$http', '$log', 'Words', 'Utils', 'ng
   */
   function WordsGrid1Controller($scope, $http, $log, Words, Utils, ngDialog) {
 
+        Array.prototype.search = function (field, remove) {
+            var result = undefined;
+            this.some(function(currentValue,index) {
+                if (currentValue.fieldName === field)
+                    result = index;
+            });
+            if (remove !== undefined && result !== undefined) {
+                this.splice(result, 1);
+            }
+            return result;
+        };
+
       function rowTemplate() {
         return '<div ng-dblclick="grid.appScope.rowDblClick(row)" >' +
                      '  <div ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.colDef.name" class="ui-grid-cell" ng-class="{ \'ui-grid-row-header-cell\': col.isRowHeader }"  ui-grid-cell></div>' +
@@ -163,13 +175,16 @@ WordsGrid1Controller.$inject = ['$scope', '$http', '$log', 'Words', 'Utils', 'ng
             });
 
             $scope.gridApi.core.on.filterChanged($scope, function () {
-                $scope.filter = [];
+                if ($scope.filter === undefined) {
+                    $scope.filter = [];
+                }
 
                 var grid = this.grid;
                 angular.forEach(grid.columns, function (column) {
                     var fieldName = column.field;
                     var value = column.filters[0].term;
                     if (value) {
+                        $scope.filter.search(fieldName, true);
                         $scope.filter.push({
                             fieldName: fieldName,
                             value: value
@@ -195,6 +210,16 @@ WordsGrid1Controller.$inject = ['$scope', '$http', '$log', 'Words', 'Utils', 'ng
         $scope.load();
 
         $scope.refresh = function() {
+            if ($scope.filter === undefined) {
+                $scope.filter = [];
+            }
+            if ($scope.favorite !== undefined) {
+                $scope.filter.search('favorite', true);
+                $scope.filter.push({
+                    fieldName: 'favorite',
+                    value: $scope.favorite
+                });
+            }
             $scope.load();
         };
 
