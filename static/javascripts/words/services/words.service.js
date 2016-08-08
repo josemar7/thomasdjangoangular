@@ -9,13 +9,13 @@
     .module('thomas.words.services')
     .factory('Words', Words);
 
-  Words.$inject = ['$http', '$q'];
+  Words.$inject = ['$http', '$q', '$cookies'];
 
   /**
   * @namespace Words
   * @returns {Factory}
   */
-  function Words($http, $q) {
+  function Words($http, $q, $cookies) {
 
     var anonymousToken = {
         'AnonymousToken': '78020290-5df3-44b8-9bdb-7b3b4fea2f25'
@@ -29,7 +29,9 @@
       get: get,
       update: update,
       destroy: destroy,
-      allWordType: allWordType
+      allWordType: allWordType,
+      getMark: getMark,
+      setMark: setMark
     };
 
     return Words;
@@ -156,6 +158,16 @@
 
     function destroy(word) {
       return $http.delete('/api/v1/words/' + word.id + '/');
+    }
+
+    function getMark() {
+        return $cookies.get('myMark');
+    }
+
+    function setMark(value) {
+        if (value !== undefined) {
+            $cookies.put('myMark', value);
+        }
     }
 
   }

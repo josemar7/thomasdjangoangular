@@ -15,7 +15,7 @@
     .module('thomas.words.directives', ['ngDialog']);
 
   angular
-    .module('thomas.words.services', []);
+    .module('thomas.words.services', ['ngCookies']);
 
 
 })();

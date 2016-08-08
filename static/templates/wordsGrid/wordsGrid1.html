@@ -4,6 +4,11 @@
     <h3 translate="VOCABULARY"></h3>
 
     <div class="well form-inline">
+      <input type="text" name="mark" id="mark" class="text-uppercase"
+             maxlength="1" size="1"
+             ng-change="setMark()" ng-model="mark"
+             ui-mask="A"
+             ui-mask-placeholder ui-mask-placeholder-char="_" >
 
       <div class="form-group">
         <label translate="HIDDEN_COLUMN"></label>

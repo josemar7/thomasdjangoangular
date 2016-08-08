@@ -57,7 +57,7 @@ WordsGrid1Controller.$inject = ['$scope', '$http', '$log', 'Words', 'Utils', 'ng
       };
 
         $scope.pagination = {
-            limit: '5',
+            limit: '10',
             offset: undefined,
             totalItems: null,
             getTotalPages: function () {
@@ -175,8 +175,16 @@ WordsGrid1Controller.$inject = ['$scope', '$http', '$log', 'Words', 'Utils', 'ng
             });
 
             $scope.gridApi.core.on.filterChanged($scope, function () {
-                if ($scope.filter === undefined) {
-                    $scope.filter = [];
+                var element_favorite = undefined;
+                if ($scope.filter !== undefined) {
+                    var i = $scope.filter.search('favorite');
+                    if (i !== undefined) {
+                        element_favorite = $scope.filter[i];
+                    }
+                }
+                $scope.filter = [];
+                if (element_favorite !== undefined) {
+                    $scope.filter.push(element_favorite);
                 }
 
                 var grid = this.grid;
@@ -207,6 +215,10 @@ WordsGrid1Controller.$inject = ['$scope', '$http', '$log', 'Words', 'Utils', 'ng
             });
         }
 
+        $scope.mark = Words.getMark();
+        $scope.setMark = function() {
+            Words.setMark($scope.mark);
+        }
         $scope.load();
 
         $scope.refresh = function() {
@@ -215,10 +227,12 @@ WordsGrid1Controller.$inject = ['$scope', '$http', '$log', 'Words', 'Utils', 'ng
             }
             if ($scope.favorite !== undefined) {
                 $scope.filter.search('favorite', true);
-                $scope.filter.push({
-                    fieldName: 'favorite',
-                    value: $scope.favorite
-                });
+                if ($scope.favorite !== '') {
+                    $scope.filter.push({
+                        fieldName: 'favorite',
+                        value: $scope.favorite
+                    });
+                }
             }
             $scope.load();
         };
