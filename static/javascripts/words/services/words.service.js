@@ -173,13 +173,30 @@
     }
 
     function getParameter(parameter) {
-      return $http.get('/api/v1/parameter/' + parameter + '/');
+        var deferred = $q.defer();
+
+        return $http.get('/api/v1/parameter/' + parameter + '/').
+          then(function(response) {
+              deferred.resolve(response.data);
+              return deferred.promise;
+          }, function(response) {
+              deferred.reject(response);
+              return deferred.promise;
+          });
     }
 
     function updateParameter(parameter, value) {
-      var object = getParameter(parameter);
-      object.value = value;
-      return $http.put('/api/v1/parameter/' + parameter + '/', object);
+        if (value !== undefined && value !== '') {
+            getParameter('mark')
+            .then(
+              function(result) {
+                  result.value = value;
+                  return $http.put('/api/v1/parameter/' + parameter + '/', result);
+              },
+              function(error) {
+              }
+            );
+        }
     }
 
   }

@@ -215,9 +215,17 @@ WordsGrid1Controller.$inject = ['$scope', '$http', '$log', 'Words', 'Utils', 'ng
             });
         }
 
-        $scope.mark = Words.getMark();
+        Words.getParameter('mark')
+        .then(
+          function(result) {
+              $scope.mark = result.value;
+          },
+          function(error) {
+          }
+        );
+
         $scope.setMark = function() {
-            Words.setMark($scope.mark);
+            Words.updateParameter('mark', $scope.mark);
         }
         $scope.load();
 
