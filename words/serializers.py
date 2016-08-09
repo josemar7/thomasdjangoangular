@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from authentication.serializers import AccountSerializer
-from words.models import Word, WordType
+from words.models import Word, WordType, Parameter
 
 
 class WordSerializer(serializers.ModelSerializer):
@@ -29,5 +29,18 @@ class WordTypeSerializer(serializers.ModelSerializer):
 
     def get_validation_exclusions(self, *args, **kwargs):
         exclusions = super(WordTypeSerializer, self).get_validation_exclusions()
+
+        return exclusions
+
+class ParameterSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Parameter
+
+        fields = ('id', 'name', 'value', 'author', 'created_at', 'updated_at')
+        read_only_fields = ('id', 'created_at', 'updated_at')
+
+    def get_validation_exclusions(self, *args, **kwargs):
+        exclusions = super(ParameterSerializer, self).get_validation_exclusions()
 
         return exclusions

@@ -170,5 +170,13 @@
         }
     }
 
+    function getParameter(parameter) {
+      return $http.get('/api/v1/parameter/' + parameter + '/');
+    }
+
+    function updateParameter(value) {
+      return $http.put('/api/v1/accounts/' + profile.username + '/', profile);
+    }
+
   }
 })();

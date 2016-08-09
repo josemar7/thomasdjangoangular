@@ -5,9 +5,10 @@ from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 from rest_framework import status
 from query_logger import DatabaseQueryLoggerMixin
-from words.models import Word, WordType
+from words.models import Word, WordType, Parameter
 from words.permissions import IsAuthorOfWord
-from words.serializers import WordSerializer, WordTypeSerializer
+from words.serializers import WordSerializer, WordTypeSerializer, ParameterSerializer
+
 
 class WordFilter(FilterSet):
     name = django_filters.CharFilter(name="name", lookup_type='startswith')
@@ -74,3 +75,9 @@ class AccountWordsViewSet(viewsets.ViewSet):
         serializer = self.serializer_class(queryset, many=True)
 
         return Response(serializer.data)
+
+class ParameterViewSet(viewsets.ModelViewSet):
+    lookup_field = 'name'
+    queryset = Parameter.objects.all()
+    serializer_class = ParameterSerializer
+

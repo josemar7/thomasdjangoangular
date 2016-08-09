@@ -5,13 +5,14 @@ from rest_framework_nested import routers
 from authentication.views import AccountViewSet, LoginView, LogoutView, CurrentUserView, CheckView
 from tests.views import TestWordsViewSet
 from thomas.views import IndexView
-from words.views import WordViewSet, AccountWordsViewSet, WordTypeViewSet
+from words.views import WordViewSet, AccountWordsViewSet, WordTypeViewSet, ParameterViewSet
 
 router = routers.SimpleRouter()
 
 router.register(r'accounts', AccountViewSet)
 router.register(r'words', WordViewSet)
 router.register(r'wordsType', WordTypeViewSet)
+router.register(r'parameter', ParameterViewSet)
 router.register(r'tests', TestWordsViewSet)
 
 accounts_router = routers.NestedSimpleRouter(

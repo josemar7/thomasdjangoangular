@@ -37,3 +37,14 @@ class Word(models.Model):
 
     def __unicode__(self):
         return '{0}'.format(self.content)
+
+class Parameter(models.Model):
+    name = models.TextField()
+    value = models.TextField()
+    author = models.ForeignKey(Account)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __unicode__(self):
+        return '{0}'.format(self.content)
