@@ -31,7 +31,9 @@
       destroy: destroy,
       allWordType: allWordType,
       getMark: getMark,
-      setMark: setMark
+      setMark: setMark,
+      getParameter: getParameter,
+      updateParameter: updateParameter
     };
 
     return Words;
@@ -174,8 +176,10 @@
       return $http.get('/api/v1/parameter/' + parameter + '/');
     }
 
-    function updateParameter(value) {
-      return $http.put('/api/v1/accounts/' + profile.username + '/', profile);
+    function updateParameter(parameter, value) {
+      var object = getParameter(parameter);
+      object.value = value;
+      return $http.put('/api/v1/parameter/' + parameter + '/', object);
     }
 
   }
