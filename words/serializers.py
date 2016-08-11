@@ -33,6 +33,7 @@ class WordTypeSerializer(serializers.ModelSerializer):
         return exclusions
 
 class ParameterSerializer(serializers.ModelSerializer):
+    author = AccountSerializer(read_only=True, required=False)
 
     class Meta:
         model = Parameter

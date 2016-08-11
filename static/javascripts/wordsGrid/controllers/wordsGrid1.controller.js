@@ -221,6 +221,7 @@ WordsGrid1Controller.$inject = ['$scope', '$http', '$log', 'Words', 'Utils', 'ng
               $scope.mark = result.value;
           },
           function(error) {
+            $log.log(error);
           }
         );
 

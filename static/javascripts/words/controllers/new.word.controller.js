@@ -44,7 +44,7 @@
                 Utils.getMessageWithSnack('CREATED_WORD', { word: data.data.name.toUpperCase()});
                 $state.go("words2", {}, {reload: true});
             },
-            function() {
+            function(data) {
                 if (data.status == 666)
                     Utils.getMessageWithSnack('WORD_EXISTS', { word: data.data.name.toUpperCase()});
             });

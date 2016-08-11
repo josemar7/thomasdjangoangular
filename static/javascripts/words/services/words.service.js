@@ -194,6 +194,10 @@
                   return $http.put('/api/v1/parameter/' + parameter + '/', result);
               },
               function(error) {
+                  return $http.post('/api/v1/parameter/', {
+                    name: 'mark',
+                    value: value
+                  });
               }
             );
         }
