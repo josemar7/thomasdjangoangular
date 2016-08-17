@@ -45,6 +45,17 @@ class WordViewSet(CreateParent, viewsets.ModelViewSet, DatabaseQueryLoggerMixin)
     filter_class = WordFilter
     ordering_fields = ('name', 'translation', 'favorite')
 
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset().filter(author__username=request.user.username))
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
     def get_permissions(self):
         if self.request.method in permissions.SAFE_METHODS:
             return (permissions.AllowAny(),)
@@ -79,3 +90,9 @@ class ParameterViewSet(CreateParent, viewsets.ModelViewSet):
     lookup_field = 'name'
     queryset = Parameter.objects.all()
     serializer_class = ParameterSerializer
+
+    def retrieve(self, request, *args, **kwargs):
+        self.queryset = self.get_queryset().filter(author__username=request.user.username)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
