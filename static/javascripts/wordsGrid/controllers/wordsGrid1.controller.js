@@ -61,7 +61,10 @@ WordsGrid1Controller.$inject = ['$scope', '$http', '$log', 'Words', 'Utils', 'ng
             offset: undefined,
             totalItems: null,
             getTotalPages: function () {
-                return Math.ceil(this.totalItems / this.limit);
+                var total = Math.ceil(this.totalItems / this.limit);
+                if (total === 0)
+                    total = 1;
+                return total;
             },
             getCurrentPage: function () {
                 if (this.offset == undefined)

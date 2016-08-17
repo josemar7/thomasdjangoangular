@@ -25,7 +25,7 @@ class WordType(models.Model):
         return '{0}'.format(self.content)
 
 class Word(models.Model):
-    name = UpperCharField(null=False, max_length=100, unique=True, uppercase=True)
+    name = UpperCharField(null=False, max_length=100, uppercase=True)
     translation = UpperCharField(null=False, max_length=200, uppercase=True)
     comment = models.TextField(null=True, blank=True)
     favorite = models.BooleanField(default=True)
@@ -37,6 +37,10 @@ class Word(models.Model):
 
     def __unicode__(self):
         return '{0}'.format(self.content)
+
+    class Meta:
+        unique_together = ('name', 'author')
+
 
 class Parameter(models.Model):
     name = models.TextField()

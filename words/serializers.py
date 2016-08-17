@@ -12,6 +12,7 @@ class WordSerializer(serializers.ModelSerializer):
 
         fields = ('id', 'name', 'translation', 'comment', 'favorite', 'wordType', 'author', 'created_at', 'updated_at')
         read_only_fields = ('id', 'created_at', 'updated_at')
+        validators = []  # Remove a default "unique together" constraint.
 
     def get_validation_exclusions(self, *args, **kwargs):
         exclusions = super(WordSerializer, self).get_validation_exclusions()
