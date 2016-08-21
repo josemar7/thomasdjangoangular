@@ -1,0 +1,7 @@
+{
+  "name": "Carla Thomas",
+  "description": "Carla Thomas english app.",
+  "image": "heroku/python",
+  "repository": "https://github.com/josemar7/thomas",
+  "keywords": ["python", "django" ]
+}
